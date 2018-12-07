@@ -7,8 +7,8 @@ namespace HaroutTatarianGameProject
 {
     public class ActionScene
     {
-        private const string gameEndMessageLineOne = "You Lost";
-        private const string gameEndMessageLineTwo = "Press ESC To Go To Main Menu";
+        private string gameEndMessageLineOne = "";
+        private string gameEndMessageLineTwo = "";
         private readonly SpriteFont gameEndFont;
         private readonly SpriteFont spriteFont;
 
@@ -27,6 +27,7 @@ namespace HaroutTatarianGameProject
 
         public ActionScene (Game game, SpriteBatch spriteBatch)
         {
+            Game1.audioManager.SetGameState(GameState.None);
             Texture2D backgroundTexture = game.Content.Load<Texture2D>("alien_planet");
             gameEndFont = game.Content.Load<SpriteFont>("Courier New Big");
             spriteFont = game.Content.Load<SpriteFont>("Courier New");
@@ -59,24 +60,42 @@ namespace HaroutTatarianGameProject
                 {
                     isInitialEntered = true;
                     levelStopWatch = new LevelStopWatch(game, spriteBatch);
+                    Game1.audioManager.SetGameState(GameState.ActionScene);
                 }
             }
             else
             {
-                player.Update();
-                enemy.Update();
-                star.Update();
-                levelStopWatch.Update();
+                if (levelStopWatch.LevelTime.IsRunning && healthBar.InnerRectangle.Width > 0)
+                {
+                    player.Update();
+                    enemy.Update();
+                    star.Update();
+                    levelStopWatch.Update();
+                }
+                else
+                {
+                    // Stop background music
+                    if (Game1.audioManager.GetGameState() != GameState.None)
+                    {
+                        Game1.audioManager.SetGameState(GameState.None);
+                    }
+
+                    // Check if dead
+                    if(healthBar.InnerRectangle.Width <= 0)
+                    {
+                        gameEndMessageLineOne = "You Lost";
+                        gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+                    }
+                    // Check if time reach
+                    else if(!levelStopWatch.LevelTime.IsRunning)
+                    {
+                        gameEndMessageLineOne = "You Won";
+                        gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+                    }
+                }
             }
 
-            //if (levelStopWatch.LevelTime.IsRunning && healthBar.InnerRectangle.Width > 0)
-            //{
 
-            //}
-            //else if (!levelStopWatch.LevelTime.IsRunning && Game1.audioManager.GetGameState() != GameState.None)
-            //{
-            //    Game1.audioManager.SetGameState(GameState.None);
-            //}
             //else if(!levelStopWatch.LevelTime.IsRunning && healthBar.InnerRectangle.Width > 0)
             //{
 
@@ -97,18 +116,19 @@ namespace HaroutTatarianGameProject
                 star.Draw();
                 enemy.Draw();
                 player.Draw();
-            }
-            if (healthBar.InnerRectangle.Width <= 0)
-            {
-                spriteBatch.DrawString(gameEndFont, gameEndMessageLineOne,
-                    new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).X / 2,
-                    game.GraphicsDevice.DisplayMode.Height / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).Y / 2),
-                    Color.Cornsilk);
-                spriteBatch.DrawString(spriteFont, gameEndMessageLineTwo,
-                    new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).X / 2,
-                    game.GraphicsDevice.DisplayMode.Height / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).Y / 2
-                    + gameEndFont.MeasureString(gameEndMessageLineOne).Y),
-                    Color.Cornsilk);
+
+                if (healthBar.InnerRectangle.Width <= 0 || !levelStopWatch.LevelTime.IsRunning)
+                {
+                    spriteBatch.DrawString(gameEndFont, gameEndMessageLineOne,
+                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).X / 2,
+                        game.GraphicsDevice.DisplayMode.Height / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).Y / 2),
+                        Color.Cornsilk);
+                    spriteBatch.DrawString(spriteFont, gameEndMessageLineTwo,
+                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).X / 2,
+                        game.GraphicsDevice.DisplayMode.Height / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).Y / 2
+                        + gameEndFont.MeasureString(gameEndMessageLineOne).Y),
+                        Color.Cornsilk);
+                }
             }
         }
     }

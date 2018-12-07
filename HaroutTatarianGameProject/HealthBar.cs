@@ -10,7 +10,7 @@ namespace HaroutTatarianGameProject
         private readonly SpriteBatch spriteBatch;
         private readonly Game game;
         private readonly Rectangle outerRectangle;
-        public readonly int innerRectangleWidth;
+        private readonly int innerRectangleWidth;
 
         public Rectangle InnerRectangle { get; private set; }
 

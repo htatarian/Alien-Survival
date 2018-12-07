@@ -48,8 +48,8 @@ namespace HaroutTatarianGameProject
         /// </summary>
         protected override void LoadContent()
         {
-            startScene = new StartScene(this, spriteBatch);
             audioManager = new AudioManager(this);
+            startScene = new StartScene(this, spriteBatch);
         }
 
         /// <summary>
@@ -73,7 +73,6 @@ namespace HaroutTatarianGameProject
                 {
                     startScene = null;
                     actionScene = new ActionScene(this, spriteBatch);
-                    audioManager.SetGameState(GameState.ActionScene);
                 }
                 else if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
                 {
@@ -84,7 +83,6 @@ namespace HaroutTatarianGameProject
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
-                    audioManager.SetGameState(GameState.StartScene);
                     actionScene = null;
                     startScene = new StartScene(this, spriteBatch);
                 }
