@@ -13,38 +13,42 @@ namespace HaroutTatarianGameProject
         {
             this.path = path;
             scores = new List<Score>();
-            LoadScores(path);
+            LoadScores();
         }
+
         public void Add(Score score)
         {
-            if (IsHighScore(score))
+            if (IsQualifiedScore(score))
             {
                 scores.Add(score);
                 scores.Sort();
-                RefreshScores(path);
+                RefreshScores();
             }
         }
 
-        public bool IsHighScore(Score score)
+        private bool IsQualifiedScore(Score score)
         {
             return scores.Where(s => s.Points >= score.Points).Count() != 10 && scores.Where(s=> s.Equals(score)).Count() == 0;
         }
 
-        private void LoadScores(string path)
+        private void LoadScores()
         {
             if (File.Exists(path))
             {
                 string text = File.ReadAllText(path);
-                List<string> scoreStr = text.Split(',').ToList();
-                foreach (string s in scoreStr)
+                if (!(string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text)))
                 {
-                    string[] args = s.Split('|');
-                    scores.Add(new Score(args[0], int.Parse(args[1])));
+                    List<string> scoreStr = text.Split(',').ToList();
+                    foreach (string s in scoreStr)
+                    {
+                        string[] args = s.Split('|');
+                        scores.Add(new Score(args[0], int.Parse(args[1])));
+                    }
                 }
             }
         }
 
-        private void WriteScores(string path)
+        private void WriteScores()
         {
             string output = "";
             foreach (Score s in scores)
@@ -56,10 +60,10 @@ namespace HaroutTatarianGameProject
             File.WriteAllText(path, output);
         }
 
-        public void RefreshScores(string path)
+        private void RefreshScores()
         {
-            WriteScores(path);
-            LoadScores(path);
+            WriteScores();
+            LoadScores();
         }
     }
 }

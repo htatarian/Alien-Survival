@@ -12,7 +12,7 @@ namespace HaroutTatarianGameProject
         private readonly SpriteFont gameEndFont;
         private readonly SpriteFont spriteFont;
 
-        private InitialInputWindow highScorePopUp;
+        private InitialInputWindow InitialInputWindow;
         private SpriteBatch spriteBatch;
         private readonly Game game;
         public static LevelStopWatch levelStopWatch;
@@ -42,7 +42,7 @@ namespace HaroutTatarianGameProject
             player = new Player(game, spriteBatch);
             star = new StarSprite(game, spriteBatch, player);
             enemy = new Enemy(game, spriteBatch, Color.DarkRed, player, new Vector2(0, 0));
-            highScorePopUp = new InitialInputWindow(game, spriteBatch);
+            InitialInputWindow = new InitialInputWindow(game, spriteBatch);
             healthBar = new HealthBar(game, spriteBatch);
 
             player.enemy = enemy;
@@ -55,8 +55,8 @@ namespace HaroutTatarianGameProject
 
             if (!isInitialEntered)
             {
-                highScorePopUp.Update();
-                if (keys.Contains(Keys.Enter) && !isInitialEntered && highScorePopUp.Input != "")
+                InitialInputWindow.Update();
+                if (keys.Contains(Keys.Enter) && !isInitialEntered && InitialInputWindow.Input != "")
                 {
                     isInitialEntered = true;
                     levelStopWatch = new LevelStopWatch(game, spriteBatch);
@@ -86,11 +86,14 @@ namespace HaroutTatarianGameProject
                         gameEndMessageLineOne = "You Lost";
                         gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
                     }
-                    // Check if time reach
+                    // Check if time reached
                     else if(!levelStopWatch.LevelTime.IsRunning)
                     {
                         gameEndMessageLineOne = "You Won";
                         gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+
+                        LeaderBoard leaderBoard = new LeaderBoard("leaderboard");
+                        leaderBoard.Add(new Score(InitialInputWindow.Input, star.CollectedStarsCount));
                     }
                 }
             }
@@ -107,7 +110,7 @@ namespace HaroutTatarianGameProject
             background.Draw();
             if (!isInitialEntered)
             {
-                highScorePopUp.Draw();
+                InitialInputWindow.Draw();
             }
             else
             {
