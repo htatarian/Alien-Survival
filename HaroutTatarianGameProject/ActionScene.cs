@@ -21,13 +21,15 @@ namespace HaroutTatarianGameProject
         Leaderboard highScoreList;
         public Enemy enemy;
         bool isInitialEntered = false;
+        bool isWinSoundPlayed = false;
+        bool isThemeSongStopped = false;
 
         public Player player;
         Background background;
 
         public ActionScene (Game game, SpriteBatch spriteBatch)
         {
-            Game1.audioManager.SetGameState(GameState.None);
+            Game1.audioManager.Play(Audio.None);
             Texture2D backgroundTexture = game.Content.Load<Texture2D>("action_scene_background");
             gameEndFont = game.Content.Load<SpriteFont>("Courier New Big");
             spriteFont = game.Content.Load<SpriteFont>("Courier New");
@@ -60,7 +62,7 @@ namespace HaroutTatarianGameProject
                 {
                     isInitialEntered = true;
                     levelStopWatch = new LevelStopWatch(game, spriteBatch);
-                    Game1.audioManager.SetGameState(GameState.ActionScene);
+                    Game1.audioManager.Play(Audio.ActionScene);
                 }
             }
             else
@@ -75,9 +77,10 @@ namespace HaroutTatarianGameProject
                 else
                 {
                     // Stop background music
-                    if (Game1.audioManager.GetGameState() != GameState.None)
+                    if (!isThemeSongStopped)
                     {
-                        Game1.audioManager.SetGameState(GameState.None);
+                        Game1.audioManager.Play(Audio.None);
+                        isThemeSongStopped = true;
                     }
 
                     // Check if dead
@@ -85,12 +88,23 @@ namespace HaroutTatarianGameProject
                     {
                         gameEndMessageLineOne = "You Lost";
                         gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+
+                        if (!isWinSoundPlayed)
+                        {
+                            Game1.audioManager.Play(Audio.Lose);
+                            isWinSoundPlayed = true;
+                        }
                     }
                     // Check if time reached
                     else if(!levelStopWatch.LevelTime.IsRunning)
                     {
-                        gameEndMessageLineOne = "You Won";
+                        gameEndMessageLineOne = "You Survived";
                         gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+                        if (!isWinSoundPlayed)
+                        {
+                            Game1.audioManager.Play(Audio.Win);
+                            isWinSoundPlayed = true;
+                        }
 
                         Leaderboard leaderBoard = new Leaderboard("leaderboard");
                         leaderBoard.Add(new Score(InitialInputWindow.Input, star.CollectedStarsCount));

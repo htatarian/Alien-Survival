@@ -18,8 +18,6 @@ namespace HaroutTatarianGameProject
         private readonly SpriteFont hilightFont;
         private readonly SpriteFont titleFont;
         private readonly List<string> menuItems;
-        private readonly SoundEffect selectionChangeSfx;
-        private readonly SoundEffectInstance selectionChangeSfxInstance;
         private readonly Game game;
         private KeyboardState previousKeyboardState;
 
@@ -29,13 +27,11 @@ namespace HaroutTatarianGameProject
             regularFont = game.Content.Load<SpriteFont>("Courier New");
             hilightFont = game.Content.Load<SpriteFont>("Courier New Bold");
             titleFont = game.Content.Load<SpriteFont>("Courier New Title");
-            selectionChangeSfx = game.Content.Load<SoundEffect>("menuselectionsfx");
 
             // Initilize class fields
             this.game = game;
             this.spriteBatch = spriteBatch;
             menuItems = new List<string> {"Start Game", "Leaderboard", "Credit", "Help", "Quit" };
-            selectionChangeSfxInstance = selectionChangeSfx.CreateInstance();
         }
 
         public void Update()
@@ -44,7 +40,7 @@ namespace HaroutTatarianGameProject
 
             if (keyboardState.IsKeyDown(Keys.Down) && previousKeyboardState.IsKeyUp(Keys.Down) || (keyboardState.IsKeyDown(Keys.S) && previousKeyboardState.IsKeyUp(Keys.S)))
             {
-                selectionChangeSfxInstance.Play();
+                Game1.audioManager.Play(Audio.SelectionChange);
                 SelectedIndex++;
                 if (SelectedIndex == menuItems.Count)
                 {
@@ -53,7 +49,7 @@ namespace HaroutTatarianGameProject
             }
             if (keyboardState.IsKeyDown(Keys.Up) && previousKeyboardState.IsKeyUp(Keys.Up) || (keyboardState.IsKeyDown(Keys.W) && previousKeyboardState.IsKeyUp(Keys.W)))
             {
-                selectionChangeSfxInstance.Play();
+                Game1.audioManager.Play(Audio.SelectionChange);
                 SelectedIndex--;
                 if (SelectedIndex == -1)
                 {

@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin a.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:a.jpeg
+
+#begin aa.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:aa.jpeg
+
 #begin action_scene_background.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -25,18 +49,6 @@
 /processorParam:TextureFormat=Color
 /build:action_scene_background.jpg
 
-#begin action_scenesfx.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:action_scenesfx.wav
-
-#begin action_scenesfx1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:action_scenesfx1.wav
-
 #begin alien_planet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,12 +60,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:alien_planet.png
-
-#begin coin_sound_effect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:coin_sound_effect.wav
 
 #begin Courier New Big.spritefont
 /importer:FontDescriptionImporter
@@ -246,11 +252,11 @@
 /processorParam:TextureFormat=Color
 /build:helpImage.png
 
-#begin highscore.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin hurtSfx.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:highscore.mp3
+/build:hurtSfx.wav
 
 #begin input_background.jpg
 /importer:TextureImporter
@@ -276,12 +282,6 @@
 /processorParam:TextureFormat=Color
 /build:intro.png
 
-#begin intro_soundeffect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:intro_soundeffect.wav
-
 #begin leaderboard_scene_background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -294,23 +294,29 @@
 /processorParam:TextureFormat=Color
 /build:leaderboard_scene_background.png
 
-#begin Lose.wav
+#begin loseGameSfx.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Lose.wav
+/build:loseGameSfx.wav
 
-#begin menuselectionsfx.wav
+#begin mainGameTheme.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:menuselectionsfx.wav
+/build:mainGameTheme.wav
 
-#begin pain.wav
+#begin mainMenuTheme.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:pain.wav
+/build:mainMenuTheme.wav
+
+#begin selectionChangeSfx.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:selectionChangeSfx.wav
 
 #begin star coin 1.png
 /importer:TextureImporter
@@ -383,4 +389,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:star coin 6.png
+
+#begin starCollectedSfx.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:starCollectedSfx.wav
+
+#begin winGameSfx.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:winGameSfx.wav
 

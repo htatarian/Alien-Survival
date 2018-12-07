@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using C3.XNA;
 
@@ -20,10 +19,9 @@ namespace HaroutTatarianGameProject
 
             this.spriteBatch = spriteBatch;
 
-
             // Define outer healthbar Rectangle
             int outerRectangleWidth = game.GraphicsDevice.DisplayMode.Width / 2;
-            int outerRectangleHeight = game.GraphicsDevice.DisplayMode.Height / 20;
+            int outerRectangleHeight = game.GraphicsDevice.DisplayMode.Height / 30;
             int outerRectangleX = game.GraphicsDevice.DisplayMode.Width / 2 - outerRectangleWidth / 2;
             int outerRectangleY = game.GraphicsDevice.DisplayMode.Height - outerRectangleHeight * 2;
             outerRectangle = new Rectangle(outerRectangleX,outerRectangleY,outerRectangleWidth,outerRectangleHeight);

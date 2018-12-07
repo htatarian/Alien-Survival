@@ -13,7 +13,7 @@ namespace HaroutTatarianGameProject
             background = new Background(game, spriteBatch,backgroundTexture);
             Menu = new MenuComponent(game, spriteBatch);
 
-            Game1.audioManager.SetGameState(GameState.StartScene);
+            Game1.audioManager.Play(Audio.StartScene);
         }
         public void Update()
         {

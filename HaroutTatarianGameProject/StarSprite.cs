@@ -27,8 +27,6 @@ namespace HaroutTatarianGameProject
         private readonly SpriteFont spriteFont;
         private readonly Player player;
         private Rectangle spriteRectangle;
-        private readonly SoundEffect starCollectedSfx;
-        private readonly SoundEffectInstance starCollectedSfxInstance;
         private readonly Game game;
 
         public int CollectedStarsCount { get; set; }
@@ -47,16 +45,11 @@ namespace HaroutTatarianGameProject
                 game.Content.Load<Texture2D>("star coin 6")
             };
 
-            // Load star collecting sound effect
-            starCollectedSfx = game.Content.Load<SoundEffect>("coin_sound_effect");
-            starCollectedSfxInstance = starCollectedSfx.CreateInstance();
-
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
 
             spriteFont = game.Content.Load<SpriteFont>("Courier New");
 
             this.player = player;
-
 
             spriteRectangle = GetRandomSpriteRectangle(textureReducationScale);
         }
@@ -77,7 +70,7 @@ namespace HaroutTatarianGameProject
             {
                 spriteRectangle = GetRandomSpriteRectangle(textureReducationScale);
                 CollectedStarsCount++;
-                starCollectedSfxInstance.Play();
+                Game1.audioManager.Play(Audio.StarCollected);
             }
         }
 

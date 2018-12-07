@@ -10,10 +10,7 @@ namespace HaroutTatarianGameProject
     public class Player : AlienSprite
     {
         public Enemy enemy;
-        private readonly SoundEffect playerHurtSfx;
-        private readonly SoundEffectInstance playerHurtSfxInstance;
-        private readonly SoundEffect playerDiesSfx;
-        private readonly SoundEffectInstance playerDiesSfxInstance;
+
         private readonly Game game;
 
         private readonly SpriteBatch spriteBatch;
@@ -21,7 +18,7 @@ namespace HaroutTatarianGameProject
         private string hint = "";
 
         private KeyboardState previousKeyboardState;
-        private const float Speed = 6.66f;
+        private const float Speed = 7f;
         protected override bool IsIdle { get; set; }
         protected override bool WasRunning { get; set; }
         protected override Point Velocity { get; set; }
@@ -37,16 +34,6 @@ namespace HaroutTatarianGameProject
             SpriteRectangle = new Rectangle(game.GraphicsDevice.DisplayMode.Width/2, game.GraphicsDevice.DisplayMode.Height/2,SpriteDimensions.X,SpriteDimensions.Y);
 
             Vector2 tempPos = new Vector2(game.GraphicsDevice.DisplayMode.Width / 10, spriteFont.MeasureString(hint).Y + game.GraphicsDevice.DisplayMode.Height / 8);
-
-            // Load player hurt sound effect
-            playerHurtSfx = game.Content.Load<SoundEffect>("pain");
-            playerHurtSfxInstance = playerHurtSfx.CreateInstance();
-
-            // Load player dies sound effect
-            playerDiesSfx = game.Content.Load<SoundEffect>("Lose");
-            playerDiesSfxInstance = playerDiesSfx.CreateInstance();
-
-
         }
 
         public override void Draw()
@@ -120,13 +107,9 @@ namespace HaroutTatarianGameProject
                 Sides collisionSides = outerPlayerRec.CheckCollisions(enemy.SpriteRectangle);
 
                 if (collisionSides != Sides.None)
-                {           
-                    if (!ActionScene.healthBar.DescreaseHealth())
-                    {
-                        Game1.audioManager.SetGameState(GameState.None);
-                        playerDiesSfxInstance.Play();
-                    }
-                    playerHurtSfxInstance.Play();
+                {
+                    ActionScene.healthBar.DescreaseHealth();
+                    Game1.audioManager.Play(Audio.Hurt);
                 }
             }
 
