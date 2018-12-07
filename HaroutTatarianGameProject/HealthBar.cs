@@ -29,17 +29,17 @@ namespace HaroutTatarianGameProject
             outerRectangle = new Rectangle(outerRectangleX,outerRectangleY,outerRectangleWidth,outerRectangleHeight);
 
             // Define inner healthbar Rectangle
-            innerRectangleWidth = outerRectangleWidth - outerRectangleWidth / 40;
-            int innerRectangleHeight = outerRectangleHeight - outerRectangleHeight / 5;
-            int innerRectangleX = outerRectangleX + (outerRectangleWidth - innerRectangleWidth) / 2;
-            int innerRectangleY = outerRectangleY + (outerRectangleHeight - innerRectangleHeight) / 2;
+            innerRectangleWidth = outerRectangleWidth;
+            int innerRectangleHeight = outerRectangleHeight;
+            int innerRectangleX = outerRectangleX;
+            int innerRectangleY = outerRectangleY;
             InnerRectangle = new Rectangle(innerRectangleX, innerRectangleY, innerRectangleWidth, innerRectangleHeight);
         }
 
         public void Draw()
         {
-            spriteBatch.FillRectangle(outerRectangle, Color.Gray);
-            spriteBatch.FillRectangle(InnerRectangle, Color.Black);
+            spriteBatch.FillRectangle(InnerRectangle, Color.Red, 0.5);
+            spriteBatch.DrawRectangle(outerRectangle, Color.Black, 3f);
         }
 
         public bool DescreaseHealth()

@@ -141,15 +141,34 @@ namespace C3.XNA
             spriteBatch.Draw(pixel, rect, color);
 		}
 
+        /// <summary>
+        /// Draws a filled rectangle with specificed transparency. 
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="rect">The rectangle to draw</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        /// <param name="transparency">The transperncy to draw the rectangle with</param>
+        public static void FillRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, double transparency)
+        {
+            if (pixel == null)
+            {
+                CreateThePixel(spriteBatch);
+            }
 
-		/// <summary>
-		/// Draws a filled rectangle
-		/// </summary>
-		/// <param name="spriteBatch">The destination drawing surface</param>
-		/// <param name="rect">The rectangle to draw</param>
-		/// <param name="color">The color to draw the rectangle in</param>
-		/// <param name="angle">The angle in radians to draw the rectangle at</param>
-		public static void FillRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float angle)
+            // Simply use the function already there
+            spriteBatch.Draw(pixel, rect, color * (float)transparency);
+        }
+
+
+
+        /// <summary>
+        /// Draws a filled rectangle
+        /// </summary>
+        /// <param name="spriteBatch">The destination drawing surface</param>
+        /// <param name="rect">The rectangle to draw</param>
+        /// <param name="color">The color to draw the rectangle in</param>
+        /// <param name="angle">The angle in radians to draw the rectangle at</param>
+        public static void FillRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float angle)
 		{
 			if (pixel == null)
 			{

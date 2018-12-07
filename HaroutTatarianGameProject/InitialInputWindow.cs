@@ -28,26 +28,24 @@ namespace HaroutTatarianGameProject
         public InitialInputWindow(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
             text = "ENTER YOUR INITIALS";
-            textWidth = (int) spriteFont.MeasureString(text).X;
-            textHeight = (int) spriteFont.MeasureString(text).Y;
+            textWidth = (int) titleFont.MeasureString(text).X;
+            textHeight = (int) titleFont.MeasureString(text).Y;
             textX = x + Math.Abs(textWidth-width)/2;
             textY = y + 20;
 
             Input = "";
-            inputWidth = (int)spriteFont.MeasureString(Input).X;
-            inputHeight = (int)spriteFont.MeasureString(Input).Y;
+            inputWidth = (int)titleFont.MeasureString(Input).X;
+            inputHeight = (int)titleFont.MeasureString(Input).Y;
             inputX = x + Math.Abs(inputWidth - width) / 2;
             inputY = y + Math.Abs(inputHeight - height) / 2;
-            reallyTextHeight = (int)spriteFont.MeasureString("X").Y;
+            reallyTextHeight = (int)titleFont.MeasureString("X").Y;
         }
 
         public override void Draw()
         {
             base.Draw();
-            spriteBatch.DrawString(spriteFont, text, new Vector2(textX, textY), Color.Chartreuse);
-            spriteBatch.DrawString(spriteFont, Input, new Vector2(inputX, inputY), Color.Chartreuse);
-            spriteBatch.DrawLine(new Vector2(x, y + (height + reallyTextHeight) / 2),
-                new Vector2(x+width, y + (height + reallyTextHeight) /2), Color.Chartreuse);
+            spriteBatch.DrawString(titleFont, text, new Vector2(textX, textY), Color.Chartreuse);
+            spriteBatch.DrawString(titleFont, Input, new Vector2(inputX, inputY), Color.GreenYellow);
         }
 
         public void Update()
@@ -72,8 +70,8 @@ namespace HaroutTatarianGameProject
                 }
             }
 
-            inputWidth = (int)spriteFont.MeasureString(Input).X;
-            inputHeight = (int)spriteFont.MeasureString(Input).Y;
+            inputWidth = (int)titleFont.MeasureString(Input).X;
+            inputHeight = (int)titleFont.MeasureString(Input).Y;
             inputX = x + Math.Abs(inputWidth - width) / 2;
             inputY = y + Math.Abs(inputHeight - height) / 2;
 

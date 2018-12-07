@@ -28,7 +28,7 @@ namespace HaroutTatarianGameProject
         public ActionScene (Game game, SpriteBatch spriteBatch)
         {
             Game1.audioManager.SetGameState(GameState.None);
-            Texture2D backgroundTexture = game.Content.Load<Texture2D>("alien_planet");
+            Texture2D backgroundTexture = game.Content.Load<Texture2D>("action_scene_background");
             gameEndFont = game.Content.Load<SpriteFont>("Courier New Big");
             spriteFont = game.Content.Load<SpriteFont>("Courier New");
 

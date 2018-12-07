@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin action_scene_background.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:action_scene_background.jpg
+
 #begin action_scenesfx.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -56,6 +68,13 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Courier New Bold.spritefont
+
+#begin Courier New Extra Spacing.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Courier New Extra Spacing.spritefont
 
 #begin Courier New Title.spritefont
 /importer:FontDescriptionImporter
@@ -233,7 +252,7 @@
 /processorParam:Quality=Best
 /build:highscore.mp3
 
-#begin intro - Copy.png
+#begin input_background.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -243,7 +262,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:intro - Copy.png
+/build:input_background.jpg
 
 #begin intro.png
 /importer:TextureImporter
