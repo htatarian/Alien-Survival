@@ -15,6 +15,7 @@ namespace HaroutTatarianGameProject
         //declare all the scenes here
         private StartScene startScene;
         private ActionScene actionScene;
+        private LeaderboardScene leaderboardScene;
         private SpriteBatch spriteBatch;
 
         public Game1()
@@ -74,16 +75,22 @@ namespace HaroutTatarianGameProject
                     startScene = null;
                     actionScene = new ActionScene(this, spriteBatch);
                 }
+                else if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
+                {
+                    startScene = null;
+                    leaderboardScene = new LeaderboardScene(this, spriteBatch);
+                }
                 else if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
                 {
                     Exit();
                 }
             }
-            else if (actionScene != null)
+            else if (actionScene != null || leaderboardScene != null)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
                     actionScene = null;
+                    leaderboardScene = null;
                     startScene = new StartScene(this, spriteBatch);
                 }
             }
@@ -98,14 +105,9 @@ namespace HaroutTatarianGameProject
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            if (actionScene != null)
-            {
-                actionScene.Draw();
-            }
-            if (startScene != null)
-            {
-                startScene.Draw();
-            }
+            if (actionScene != null) { actionScene.Draw(); }
+            if (startScene != null) { startScene.Draw(); }
+            if (leaderboardScene != null) { leaderboardScene.Draw(); }
             spriteBatch.End();
 
             base.Draw(gameTime);

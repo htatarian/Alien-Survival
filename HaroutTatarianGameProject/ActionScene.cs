@@ -18,7 +18,7 @@ namespace HaroutTatarianGameProject
         public static LevelStopWatch levelStopWatch;
         public static StarSprite star;
         public static HealthBar healthBar;
-        LeaderBoard highScoreList;
+        Leaderboard highScoreList;
         public Enemy enemy;
         bool isInitialEntered = false;
 
@@ -32,7 +32,7 @@ namespace HaroutTatarianGameProject
             gameEndFont = game.Content.Load<SpriteFont>("Courier New Big");
             spriteFont = game.Content.Load<SpriteFont>("Courier New");
 
-            highScoreList = new LeaderBoard("save");
+            highScoreList = new Leaderboard("save");
 
             this.game = game;
             this.spriteBatch = spriteBatch;
@@ -56,7 +56,7 @@ namespace HaroutTatarianGameProject
             if (!isInitialEntered)
             {
                 InitialInputWindow.Update();
-                if (keys.Contains(Keys.Enter) && !isInitialEntered && InitialInputWindow.Input != "")
+                if (keys.Contains(Keys.Enter) && !isInitialEntered && InitialInputWindow.Input.Length == 3)
                 {
                     isInitialEntered = true;
                     levelStopWatch = new LevelStopWatch(game, spriteBatch);
@@ -92,7 +92,7 @@ namespace HaroutTatarianGameProject
                         gameEndMessageLineOne = "You Won";
                         gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
 
-                        LeaderBoard leaderBoard = new LeaderBoard("leaderboard");
+                        Leaderboard leaderBoard = new Leaderboard("leaderboard");
                         leaderBoard.Add(new Score(InitialInputWindow.Input, star.CollectedStarsCount));
                     }
                 }

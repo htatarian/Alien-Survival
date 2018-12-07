@@ -8,8 +8,9 @@ namespace HaroutTatarianGameProject
 {
     public class MenuComponent
     {
-        public int SelectedIndex { get; set; }
+        private const string title = "Alien Survival";
 
+        public int SelectedIndex { get; set; }
         private readonly Color regularColor = Color.LightGreen;
         private readonly Color hilightColor = Color.GreenYellow;
         private readonly SpriteBatch spriteBatch;
@@ -24,17 +25,16 @@ namespace HaroutTatarianGameProject
 
         public MenuComponent(Game game, SpriteBatch spriteBatch)
         {
-            this.game = game;
-            // Load Fonts
+            // Load items
             regularFont = game.Content.Load<SpriteFont>("Courier New");
             hilightFont = game.Content.Load<SpriteFont>("Courier New Bold");
             titleFont = game.Content.Load<SpriteFont>("Courier New Title");
-
-            this.spriteBatch = spriteBatch;
-            menuItems = new List<string> {"Start Game", "Help", "High Score", "Credit", "Quit"};
-
-            // Load menu item change sound effect
             selectionChangeSfx = game.Content.Load<SoundEffect>("menuselectionsfx");
+
+            // Initilize class fields
+            this.game = game;
+            this.spriteBatch = spriteBatch;
+            menuItems = new List<string> {"Start Game", "Leaderboard", "Credit", "Help", "Quit" };
             selectionChangeSfxInstance = selectionChangeSfx.CreateInstance();
         }
 
@@ -66,7 +66,6 @@ namespace HaroutTatarianGameProject
 
         public void Draw()
         {        
-            string title = "Alien Survival";
 
             Vector2 tempPos = new Vector2(game.GraphicsDevice.DisplayMode.Width / 10, titleFont.MeasureString(title).Y + game.GraphicsDevice.DisplayMode.Height/ 8);
 

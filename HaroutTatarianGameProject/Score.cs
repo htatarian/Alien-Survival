@@ -21,7 +21,7 @@ namespace HaroutTatarianGameProject
             {
                 result = 0;
             }
-            else if (other.Points > Points)
+            else if (other.Points == Points || other.Points > Points)
             {
                 result = 1;
             }

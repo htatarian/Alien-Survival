@@ -4,15 +4,15 @@ using System.Linq;
 
 namespace HaroutTatarianGameProject
 {
-    public class LeaderBoard
+    public class Leaderboard
     {
-        private List<Score> scores;
+        public List<Score> ScoreList { get; set; }
         private readonly string path;
 
-        public LeaderBoard(string path)
+        public Leaderboard(string path)
         {
             this.path = path;
-            scores = new List<Score>();
+            ScoreList = new List<Score>();
             LoadScores();
         }
 
@@ -20,15 +20,19 @@ namespace HaroutTatarianGameProject
         {
             if (IsQualifiedScore(score))
             {
-                scores.Add(score);
-                scores.Sort();
+                ScoreList.Add(score);
+                ScoreList.Sort();
+                if (ScoreList.Count > 5)
+                {
+                    ScoreList.RemoveAt(ScoreList.Count - 1);
+                }
                 RefreshScores();
             }
         }
 
         private bool IsQualifiedScore(Score score)
         {
-            return scores.Where(s => s.Points >= score.Points).Count() != 10 && scores.Where(s=> s.Equals(score)).Count() == 0;
+            return (ScoreList.Where(s => s.Points >= score.Points).Count() != 5 && ScoreList.Where(s=> s.Equals(score)).Count() == 0);
         }
 
         private void LoadScores()
@@ -42,7 +46,7 @@ namespace HaroutTatarianGameProject
                     foreach (string s in scoreStr)
                     {
                         string[] args = s.Split('|');
-                        scores.Add(new Score(args[0], int.Parse(args[1])));
+                        ScoreList.Add(new Score(args[0], int.Parse(args[1])));
                     }
                 }
             }
@@ -51,7 +55,7 @@ namespace HaroutTatarianGameProject
         private void WriteScores()
         {
             string output = "";
-            foreach (Score s in scores)
+            foreach (Score s in ScoreList)
             {
                 output += s.Name + "|" + s.Points + ",";
             }

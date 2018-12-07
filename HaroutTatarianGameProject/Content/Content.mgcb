@@ -19,6 +19,12 @@
 /processorParam:Quality=Best
 /build:action_scenesfx.wav
 
+#begin action_scenesfx1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:action_scenesfx1.wav
+
 #begin alien_planet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -227,6 +233,18 @@
 /processorParam:Quality=Best
 /build:highscore.mp3
 
+#begin intro - Copy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:intro - Copy.png
+
 #begin intro.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -244,6 +262,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:intro_soundeffect.wav
+
+#begin leaderboard_scene_background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:leaderboard_scene_background.png
 
 #begin Lose.wav
 /importer:WavImporter

@@ -7,7 +7,7 @@ namespace HaroutTatarianGameProject
     public class LevelStopWatch
     {
         public Stopwatch LevelTime { get; }
-        private const int maxGameMinutes = 10;
+        private const int maxGameMinutes = 40;
         private readonly SpriteBatch spriteBatch;
         private readonly SpriteFont spriteFont;
         private string timer = "";
