@@ -28,7 +28,7 @@ namespace HaroutTatarianGameProject
         {
             this.spriteBatch = spriteBatch;
             this.game = game;
-            spriteFont = game.Content.Load<SpriteFont>("Courier New Bold");
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew60);
             Velocity = new Point(0);
             IsIdle = true;
             WasRunning = false;
@@ -48,7 +48,7 @@ namespace HaroutTatarianGameProject
         public override void Update()
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            Keys[] keys = { Keys.D, Keys.A, Keys.W, Keys.S };
+            Keys[] keys = { Keys.D, Keys.Right, Keys.A, Keys.Left, Keys.W, Keys.Up, Keys.S, Keys.Down};
 
             if (keyboardState.IsKeyDown(Keys.F12))
             {
@@ -64,36 +64,37 @@ namespace HaroutTatarianGameProject
             WasRunning = previousKeyboardState.GetPressedKeys().Where(k => k == Keys.A | k == Keys.D | k == Keys.W | k == Keys.S
                         | k == Keys.Right | k == Keys.Left | k == Keys.Down | k == Keys.Up).Count() != 0;
             
+
             if (ActionScene.levelStopWatch.LevelTime.Elapsed.Minutes >= 1)
             {
-                keys = new Keys[] { Keys.A, Keys.D, Keys.W, Keys.S };
+                keys = new Keys[] { Keys.A, Keys.Left, Keys.D, Keys.Right, Keys.W, Keys.Up, Keys.S, Keys.Down };
                 hint = "*Feeling Dizzy*";
             }
 
             if (!IsIdle)
             {
-                if (keyboardState.IsKeyDown(keys[0]))
+                if (keyboardState.IsKeyDown(keys[0]) || keyboardState.IsKeyDown(keys[1]))
                 {
                     if (SpriteRectangle.X < game.GraphicsDevice.DisplayMode.Width - SpriteDimensions.X)
                     {
                         Velocity = new Point((int)(Speed), Velocity.Y);
                     }
                 }
-                else if (keyboardState.IsKeyDown(keys[1]))
+                else if (keyboardState.IsKeyDown(keys[2]) || keyboardState.IsKeyDown(keys[3]))
                 {
                     if (SpriteRectangle.X > 0)
                     {
                         Velocity = new Point((int)(-Speed), Velocity.Y);
                     }
                 }
-                else if (keyboardState.IsKeyDown(keys[2]))
+                else if (keyboardState.IsKeyDown(keys[4]) || keyboardState.IsKeyDown(keys[5]))
                 {
                     if (SpriteRectangle.Y > 0)
                     {
                         Velocity = new Point(Velocity.X, (int)(-Speed));
                     }
                 }
-                else if (keyboardState.IsKeyDown(keys[3]))
+                else if (keyboardState.IsKeyDown(keys[6]) || keyboardState.IsKeyDown(keys[7]))
                 {
                     if (SpriteRectangle.Y < game.GraphicsDevice.DisplayMode.Height - SpriteDimensions.Y)
                     {

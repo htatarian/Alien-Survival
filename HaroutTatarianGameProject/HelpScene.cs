@@ -28,11 +28,10 @@ namespace HaroutTatarianGameProject
             this.game = game;
             lines = new List<string>();
 
-            // Load items
-            spriteFont = game.Content.Load<SpriteFont>("Courier New");
-            titleFont = game.Content.Load<SpriteFont>("Courier New Title");
+            // Set fonts
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+            titleFont = Game1.fontsManager.GetFont(Font.CourierNew120);
 
-            //textY = (int)spriteFont.MeasureString("X").Y;
             textX = (int)spriteFont.MeasureString("XXXXXXXXXXXXXXXXXXXX").X;
 
             lines.Add("Objectives:");

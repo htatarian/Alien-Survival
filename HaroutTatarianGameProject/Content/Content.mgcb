@@ -25,40 +25,33 @@
 /processorParam:TextureFormat=Color
 /build:action_scene_background.png
 
-#begin Courier New Big.spritefont
+#begin Courier New 120.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Courier New Big.spritefont
+/build:Courier New 120.spritefont
 
-#begin Courier New Bold.spritefont
+#begin Courier New 160.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Courier New Bold.spritefont
+/build:Courier New 160.spritefont
 
-#begin Courier New Extra Spacing.spritefont
+#begin Courier New 40.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Courier New Extra Spacing.spritefont
+/build:Courier New 40.spritefont
 
-#begin Courier New Title.spritefont
+#begin Courier New 60.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Courier New Title.spritefont
-
-#begin Courier New.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Courier New.spritefont
+/build:Courier New 60.spritefont
 
 #begin green__0000_idle_1.png
 /importer:TextureImporter
@@ -204,47 +197,11 @@
 /processorParam:TextureFormat=Color
 /build:green__0017_run_6.png
 
-#begin help_scene_background.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:help_scene_background.jpg
-
-#begin helpImage.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:helpImage.png
-
 #begin hurtSfx.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:hurtSfx.wav
-
-#begin input_background.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:input_background.jpg
 
 #begin leaderboard_scene_background.png
 /importer:TextureImporter

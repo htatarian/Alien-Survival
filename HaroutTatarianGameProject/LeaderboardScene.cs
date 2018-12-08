@@ -23,10 +23,10 @@ namespace HaroutTatarianGameProject
             background = new Background(game, spriteBatch, backgroundTexture);
 
             // Load fonts
-            spriteFont = game.Content.Load<SpriteFont>("Courier New");
-            titleFont = game.Content.Load<SpriteFont>("Courier New Title");
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+            titleFont = Game1.fontsManager.GetFont(Font.CourierNew120);
 
-            // Initilize class fields
+            // Initilize fields
             this.game = game;
             this.spriteBatch = spriteBatch;
             leaderboard = new Leaderboard("leaderboard");

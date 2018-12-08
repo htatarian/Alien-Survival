@@ -9,17 +9,20 @@ namespace HaroutTatarianGameProject
     {
         private string gameEndMessageLineOne = "";
         private string gameEndMessageLineTwo = "";
+
         private readonly SpriteFont gameEndFont;
         private readonly SpriteFont spriteFont;
 
-        private InitialInputWindow InitialInputWindow;
-        private SpriteBatch spriteBatch;
-        private readonly Game game;
         public static LevelStopWatch levelStopWatch;
         public static StarSprite star;
         public static HealthBar healthBar;
-        Leaderboard highScoreList;
+
+        private readonly Game game;
+
+        private InitialInputWindow InitialInputWindow;
+        private SpriteBatch spriteBatch;
         public Enemy enemy;
+
         bool isInitialEntered = false;
         bool isWinSoundPlayed = false;
         bool isThemeSongStopped = false;
@@ -29,18 +32,21 @@ namespace HaroutTatarianGameProject
 
         public ActionScene (Game game, SpriteBatch spriteBatch)
         {
+            // Stop music
             Game1.audioManager.Play(Audio.None);
-            Texture2D backgroundTexture = game.Content.Load<Texture2D>("action_scene_background");
-            gameEndFont = game.Content.Load<SpriteFont>("Courier New Big");
-            spriteFont = game.Content.Load<SpriteFont>("Courier New");
-
-            highScoreList = new Leaderboard("save");
 
             this.game = game;
             this.spriteBatch = spriteBatch;
 
-            //Components
+            // Set background
+            Texture2D backgroundTexture = game.Content.Load<Texture2D>("action_scene_background");
             background = new Background(game, spriteBatch, backgroundTexture);
+
+            // Set fonts
+            gameEndFont = Game1.fontsManager.GetFont(Font.CourierNew160);
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+
+            // Initilize fields
             player = new Player(game, spriteBatch);
             star = new StarSprite(game, spriteBatch, player);
             enemy = new Enemy(game, spriteBatch, Color.DarkRed, player, new Vector2(0, 0));
@@ -95,7 +101,7 @@ namespace HaroutTatarianGameProject
                             isWinSoundPlayed = true;
                         }
                     }
-                    // Check if time reached
+                    // Check if survived
                     else if(!levelStopWatch.LevelTime.IsRunning)
                     {
                         gameEndMessageLineOne = "You Survived";
@@ -106,6 +112,7 @@ namespace HaroutTatarianGameProject
                             isWinSoundPlayed = true;
                         }
 
+                        // If qualifies, add to leaderboard
                         Leaderboard leaderBoard = new Leaderboard("leaderboard");
                         leaderBoard.Add(new Score(InitialInputWindow.Input, star.CollectedStarsCount));
                     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace HaroutTatarianGameProject
 {
@@ -27,14 +28,11 @@ namespace HaroutTatarianGameProject
         private readonly SoundEffectInstance selectionChangeSfxInstance;
         private readonly SoundEffectInstance starCollectedSfxInstance;
 
-        private Audio audio;
-
         public AudioManager(Game game)
         {
             SoundEffect mainMenuTheme = game.Content.Load<SoundEffect>("mainMenuTheme");
             mainMenuThemeInstance = mainMenuTheme.CreateInstance();
             mainMenuThemeInstance.IsLooped = true;
-            mainMenuThemeInstance.Play();
 
             SoundEffect mainGameTheme = game.Content.Load<SoundEffect>("mainGameTheme");
             mainGameThemeInstance = mainGameTheme.CreateInstance();
@@ -58,7 +56,6 @@ namespace HaroutTatarianGameProject
 
         public void Play(Audio audio)
         {
-            this.audio = audio;
             switch (audio)
             {
                 case Audio.StartScene:
@@ -89,11 +86,6 @@ namespace HaroutTatarianGameProject
                     mainMenuThemeInstance.Stop();
                     break;
             }
-        }
-
-        public Audio GetGameState()
-        {
-            return audio;
         }
     }
 }

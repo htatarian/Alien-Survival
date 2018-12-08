@@ -24,9 +24,9 @@ namespace HaroutTatarianGameProject
         public MenuComponent(Game game, SpriteBatch spriteBatch)
         {
             // Load items
-            regularFont = game.Content.Load<SpriteFont>("Courier New");
-            hilightFont = game.Content.Load<SpriteFont>("Courier New Bold");
-            titleFont = game.Content.Load<SpriteFont>("Courier New Title");
+            regularFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+            hilightFont = Game1.fontsManager.GetFont(Font.CourierNew60);
+            titleFont = Game1.fontsManager.GetFont(Font.CourierNew120);
 
             // Initilize class fields
             this.game = game;

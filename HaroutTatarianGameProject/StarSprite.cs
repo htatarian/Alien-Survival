@@ -47,7 +47,7 @@ namespace HaroutTatarianGameProject
 
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
 
-            spriteFont = game.Content.Load<SpriteFont>("Courier New");
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
 
             this.player = player;
 

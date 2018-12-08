@@ -10,6 +10,7 @@ namespace HaroutTatarianGameProject
     public class Game1 : Game
     {
         public static AudioManager audioManager;
+        public static FontsManager fontsManager;
         GraphicsDeviceManager graphics;
 
         //declare all the scenes here
@@ -51,6 +52,7 @@ namespace HaroutTatarianGameProject
         protected override void LoadContent()
         {
             audioManager = new AudioManager(this);
+            fontsManager = new FontsManager(this);
             startScene = new StartScene(this, spriteBatch);
         }
 

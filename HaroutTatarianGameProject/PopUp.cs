@@ -7,10 +7,9 @@ namespace HaroutTatarianGameProject
     public class PopUp
     {
         protected readonly Game game;
-        protected readonly SpriteFont titleFont;
+        protected readonly SpriteFont subTitleFont;
         protected readonly SpriteFont inputFont;
         protected readonly SpriteBatch spriteBatch;
-        protected readonly Texture2D backgroundTexture;
 
         protected readonly int width;
         protected readonly int height;
@@ -27,9 +26,8 @@ namespace HaroutTatarianGameProject
             this.game = game;
             this.spriteBatch = spriteBatch;
 
-            titleFont = game.Content.Load<SpriteFont>("Courier New");
-            inputFont = game.Content.Load<SpriteFont>("Courier New Extra Spacing");
-            backgroundTexture = game.Content.Load<Texture2D>("input_background");
+            subTitleFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+            inputFont = Game1.fontsManager.GetFont(Font.CourierNew60);
 
             width = game.GraphicsDevice.DisplayMode.Width / 2;
             height = game.GraphicsDevice.DisplayMode.Height / 4;

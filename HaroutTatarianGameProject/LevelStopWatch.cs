@@ -15,7 +15,7 @@ namespace HaroutTatarianGameProject
         public LevelStopWatch(Game game, SpriteBatch spriteBatch)
         {
             this.spriteBatch = spriteBatch;
-            spriteFont = game.Content.Load<SpriteFont>("Courier New");
+            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
             LevelTime = new Stopwatch();
             LevelTime.Start();
         }

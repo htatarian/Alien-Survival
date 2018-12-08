@@ -10,15 +10,12 @@ namespace HaroutTatarianGameProject
     public class InitialInputWindow : PopUp
     {
         private readonly int textWidth;
-        private readonly int textHeight;
-        private readonly int reallyTextHeight;
         private readonly int textX;
         private readonly int textY;
         private readonly string text = "";
 
         private const int maxInputLength = 3;
         private int inputWidth;
-        private int inputHeight;
         private int inputX;
         private int inputY;
 
@@ -28,24 +25,21 @@ namespace HaroutTatarianGameProject
         public InitialInputWindow(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
             text = "ENTER YOUR INITIALS";
-            textWidth = (int) titleFont.MeasureString(text).X;
-            textHeight = (int) titleFont.MeasureString(text).Y;
+            textWidth = (int) subTitleFont.MeasureString(text).X;
             textX = x + Math.Abs(textWidth-width)/2;
             textY = y + 20;
 
             Input = "";
-            inputWidth = (int)titleFont.MeasureString(Input).X;
-            inputHeight = (int)titleFont.MeasureString(Input).Y;
+            inputWidth = (int)subTitleFont.MeasureString(Input).X;
             inputX = x + Math.Abs(inputWidth - width) / 2;
-            inputY = y + Math.Abs(inputHeight - height) / 2;
-            reallyTextHeight = (int)titleFont.MeasureString("X").Y;
+            inputY = y + Math.Abs(subTitleFont.LineSpacing - height) / 2;
         }
 
         public override void Draw()
         {
             base.Draw();
-            spriteBatch.DrawString(titleFont, text, new Vector2(textX, textY), Color.Chartreuse);
-            spriteBatch.DrawString(titleFont, Input, new Vector2(inputX, inputY), Color.GreenYellow);
+            spriteBatch.DrawString(subTitleFont, text, new Vector2(textX, textY), Color.Chartreuse);
+            spriteBatch.DrawString(subTitleFont, Input, new Vector2(inputX, inputY), Color.GreenYellow);
         }
 
         public void Update()
@@ -70,10 +64,9 @@ namespace HaroutTatarianGameProject
                 }
             }
 
-            inputWidth = (int)titleFont.MeasureString(Input).X;
-            inputHeight = (int)titleFont.MeasureString(Input).Y;
+            inputWidth = (int)subTitleFont.MeasureString(Input).X;
             inputX = x + Math.Abs(inputWidth - width) / 2;
-            inputY = y + Math.Abs(inputHeight - height) / 2;
+            inputY = y + Math.Abs(subTitleFont.LineSpacing - height) / 2;
 
             previousKeyboardState = keyboardState;
         }
