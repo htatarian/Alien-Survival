@@ -111,12 +111,6 @@ namespace HaroutTatarianGameProject
                     }
                 }
             }
-
-
-            //else if(!levelStopWatch.LevelTime.IsRunning && healthBar.InnerRectangle.Width > 0)
-            //{
-
-            //}
         }
 
         public void Draw()

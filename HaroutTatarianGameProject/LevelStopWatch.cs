@@ -7,7 +7,7 @@ namespace HaroutTatarianGameProject
     public class LevelStopWatch
     {
         public Stopwatch LevelTime { get; }
-        private const int maxGameMinutes = 10;
+        private const int maxGameMinutes = 2;
         private readonly SpriteBatch spriteBatch;
         private readonly SpriteFont spriteFont;
         private string timer = "";
@@ -26,10 +26,13 @@ namespace HaroutTatarianGameProject
         }
 
         public void Update()
-        {        
-            timer = LevelTime.Elapsed.Minutes.ToString() + ":" + LevelTime.Elapsed.Seconds.ToString();
+        {
+            int minutesLeft = 60 - LevelTime.Elapsed.Seconds == 60 ? maxGameMinutes - LevelTime.Elapsed.Minutes : maxGameMinutes - LevelTime.Elapsed.Minutes - 1;
+            int secondsLeft = 60 - LevelTime.Elapsed.Seconds == 60 ? 0 : 60 - LevelTime.Elapsed.Seconds;
 
-            if (LevelTime.Elapsed.Seconds >= maxGameMinutes || LevelTime.Elapsed.Hours >= 1)
+            timer = minutesLeft.ToString() + ":" + secondsLeft.ToString();
+
+            if (LevelTime.Elapsed.Minutes >= maxGameMinutes || LevelTime.Elapsed.Hours >= 1)
             {
                 LevelTime.Stop();
             }

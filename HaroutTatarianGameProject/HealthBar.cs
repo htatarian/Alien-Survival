@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using C3.XNA;
+using Microsoft.Xna.Framework.Input;
 
 namespace HaroutTatarianGameProject
 {
@@ -10,6 +11,9 @@ namespace HaroutTatarianGameProject
         private readonly Game game;
         private readonly Rectangle outerRectangle;
         private readonly int innerRectangleWidth;
+        int innerRectangleHeight;
+        int innerRectangleX;
+        int innerRectangleY;
 
         public Rectangle InnerRectangle { get; private set; }
 
@@ -28,14 +32,21 @@ namespace HaroutTatarianGameProject
 
             // Define inner healthbar Rectangle
             innerRectangleWidth = outerRectangleWidth;
-            int innerRectangleHeight = outerRectangleHeight;
-            int innerRectangleX = outerRectangleX;
-            int innerRectangleY = outerRectangleY;
+            innerRectangleHeight = outerRectangleHeight;
+            innerRectangleX = outerRectangleX;
+            innerRectangleY = outerRectangleY;
             InnerRectangle = new Rectangle(innerRectangleX, innerRectangleY, innerRectangleWidth, innerRectangleHeight);
         }
 
         public void Draw()
         {
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.F10))
+            {
+                InnerRectangle = new Rectangle(innerRectangleX, innerRectangleY, innerRectangleWidth, innerRectangleHeight);
+            }
+
             spriteBatch.FillRectangle(InnerRectangle, Color.Red, 0.5);
             spriteBatch.DrawRectangle(outerRectangle, Color.Black, 3f);
         }
@@ -45,7 +56,7 @@ namespace HaroutTatarianGameProject
             bool hasHealth = false;
 
             // Decrease inner healthbar rectangle
-            InnerRectangle = new Rectangle(InnerRectangle.Location, new Point(InnerRectangle.Width - innerRectangleWidth / 200, InnerRectangle.Height));
+            InnerRectangle = new Rectangle(InnerRectangle.Location, new Point(InnerRectangle.Width - innerRectangleWidth / 100, InnerRectangle.Height));
             if (InnerRectangle.Width > 0)
             {
                 hasHealth = true;

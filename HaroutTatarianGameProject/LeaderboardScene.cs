@@ -6,7 +6,6 @@ namespace HaroutTatarianGameProject
     public class LeaderboardScene
     {
         private const string title = "Leaderboard";
-        private readonly int textY;
         private readonly int textX;
         private readonly Game game;
         private readonly SpriteBatch spriteBatch;
@@ -35,7 +34,6 @@ namespace HaroutTatarianGameProject
             // Initilize screen centre
             startingPositionY = (int) titleFont.MeasureString(title).Y * 2;
             centreX = game.GraphicsDevice.DisplayMode.Width / 2;
-            textY = (int) spriteFont.MeasureString("X").Y;
             textX = (int) spriteFont.MeasureString("X. XXX   X").X;
         }
 
@@ -47,7 +45,7 @@ namespace HaroutTatarianGameProject
                 string text = (i+1) + ". " + leaderboard.ScoreList[i].Name + "   " + leaderboard.ScoreList[i].Points;
                 spriteBatch.DrawString(spriteFont, text, 
                     new Vector2(centreX - textX/2,
-                    startingPositionY + textY * i),
+                    startingPositionY + spriteFont.LineSpacing * i),
                     Color.GreenYellow);
             }
 

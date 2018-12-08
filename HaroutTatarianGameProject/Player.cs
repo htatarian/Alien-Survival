@@ -22,6 +22,7 @@ namespace HaroutTatarianGameProject
         protected override bool IsIdle { get; set; }
         protected override bool WasRunning { get; set; }
         protected override Point Velocity { get; set; }
+        private bool isGodMod = false;
 
         public Player(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch,Color.White,AlienSize.Small)
         {
@@ -49,8 +50,13 @@ namespace HaroutTatarianGameProject
             KeyboardState keyboardState = Keyboard.GetState();
             Keys[] keys = { Keys.D, Keys.A, Keys.W, Keys.S };
 
-            // Stop the player
-            Velocity = new Point(0);
+            if (keyboardState.IsKeyDown(Keys.F12))
+            {
+                isGodMod = !isGodMod;
+            }
+
+                // Stop the player
+                Velocity = new Point(0);
 
             IsIdle = keyboardState.GetPressedKeys().Where(k => k == Keys.A | k == Keys.D | k == Keys.W | k == Keys.S
             | k == Keys.Right | k == Keys.Left | k == Keys.Down | k == Keys.Up).Count() == 0;
@@ -58,15 +64,10 @@ namespace HaroutTatarianGameProject
             WasRunning = previousKeyboardState.GetPressedKeys().Where(k => k == Keys.A | k == Keys.D | k == Keys.W | k == Keys.S
                         | k == Keys.Right | k == Keys.Left | k == Keys.Down | k == Keys.Up).Count() != 0;
             
-            if (ActionScene.levelStopWatch.LevelTime.Elapsed.Minutes >= 2)
-            {
-                keys = new Keys[] { Keys.D, Keys.A, Keys.S, Keys.W };
-                hint = "*Feeling Dizzy*";
-            }
-            else if (ActionScene.levelStopWatch.LevelTime.Elapsed.Minutes >= 1)
+            if (ActionScene.levelStopWatch.LevelTime.Elapsed.Minutes >= 1)
             {
                 keys = new Keys[] { Keys.A, Keys.D, Keys.W, Keys.S };
-                hint = "What's happening?";
+                hint = "*Feeling Dizzy*";
             }
 
             if (!IsIdle)
@@ -101,7 +102,7 @@ namespace HaroutTatarianGameProject
                 }
             }
 
-            if (enemy != null)
+            if (enemy != null && !isGodMod)
             {
                 Rectangle outerPlayerRec = new Rectangle(SpriteRectangle.X - 5, SpriteRectangle.Y - 5, SpriteRectangle.Width + 10, SpriteRectangle.Height + 10);
                 Sides collisionSides = outerPlayerRec.CheckCollisions(enemy.SpriteRectangle);

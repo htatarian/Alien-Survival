@@ -9,7 +9,7 @@ namespace HaroutTatarianGameProject
         Background background;
         public StartScene(Game game,SpriteBatch spriteBatch)
         {
-            Texture2D backgroundTexture = game.Content.Load<Texture2D>("intro");
+            Texture2D backgroundTexture = game.Content.Load<Texture2D>("start_scene_background");
             background = new Background(game, spriteBatch,backgroundTexture);
             Menu = new MenuComponent(game, spriteBatch);
 

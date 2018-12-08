@@ -11,6 +11,7 @@ namespace HaroutTatarianGameProject
         private KeyboardState PreviousKeyboardState { get; set; }
         private Player player;
         private const float Speed = 4.165f;
+        private bool isFrozen = false;
         
         protected override bool WasRunning { get; set; }
         protected override Point Velocity { get; set; }
@@ -26,51 +27,61 @@ namespace HaroutTatarianGameProject
 
         public override void Update()
         {
-            Point tempVelocity = new Point(0);
+            KeyboardState keyboardState = Keyboard.GetState();
 
-            if (!NearlyEqual(player.SpriteRectangle.X, SpriteRectangle.X))
-            { 
-                // fix enemies not going on x axis
-                if (player.SpriteRectangle.X > SpriteRectangle.X)
-                {
-                    tempVelocity = new Point((int)(Speed), tempVelocity.Y);
-                }
-                else if (player.SpriteRectangle.X < SpriteRectangle.X)
-                {
-                    tempVelocity = new Point((int)(-Speed), tempVelocity.Y);
-                }
-            }
-            if (!NearlyEqual(player.SpriteRectangle.Y, SpriteRectangle.Y))
+            if (keyboardState.IsKeyDown(Keys.F11))
             {
-                if (player.SpriteRectangle.Y > SpriteRectangle.Y)
-                {
-                    tempVelocity = new Point(tempVelocity.X, (int)(Speed));
-                }
-                else if (player.SpriteRectangle.Y < SpriteRectangle.Y)
-                {
-                    tempVelocity = new Point(tempVelocity.X, (int)(-Speed));
-                }
+                isFrozen = !isFrozen;
             }
 
-            Rectangle proposedLocation = new Rectangle(SpriteRectangle.X + tempVelocity.X,
-                                                       SpriteRectangle.Y + tempVelocity.Y,
-                                                        SpriteDimensions.X,
-                                                        SpriteDimensions.Y);
-
-            Sides collisionSides = proposedLocation.CheckCollisions(player.SpriteRectangle);
-
-            if (collisionSides != Sides.None)
+            if (!isFrozen)
             {
-                Velocity = new Point(0);
-                SpriteRectangle = new Rectangle(SpriteRectangle.X + Velocity.X, SpriteRectangle.Y + Velocity.Y, SpriteDimensions.X, SpriteDimensions.Y);
-            }
-            else
-            {
-                Velocity = tempVelocity;
-                SpriteRectangle = new Rectangle(SpriteRectangle.X + Velocity.X, SpriteRectangle.Y + Velocity.Y, SpriteDimensions.X, SpriteDimensions.Y);
-            }
+                Point tempVelocity = new Point(0);
 
-            base.Update();
+                if (!NearlyEqual(player.SpriteRectangle.X, SpriteRectangle.X))
+                {
+                    // fix enemies not going on x axis
+                    if (player.SpriteRectangle.X > SpriteRectangle.X)
+                    {
+                        tempVelocity = new Point((int)(Speed), tempVelocity.Y);
+                    }
+                    else if (player.SpriteRectangle.X < SpriteRectangle.X)
+                    {
+                        tempVelocity = new Point((int)(-Speed), tempVelocity.Y);
+                    }
+                }
+                if (!NearlyEqual(player.SpriteRectangle.Y, SpriteRectangle.Y))
+                {
+                    if (player.SpriteRectangle.Y > SpriteRectangle.Y)
+                    {
+                        tempVelocity = new Point(tempVelocity.X, (int)(Speed));
+                    }
+                    else if (player.SpriteRectangle.Y < SpriteRectangle.Y)
+                    {
+                        tempVelocity = new Point(tempVelocity.X, (int)(-Speed));
+                    }
+                }
+
+                Rectangle proposedLocation = new Rectangle(SpriteRectangle.X + tempVelocity.X,
+                                                           SpriteRectangle.Y + tempVelocity.Y,
+                                                            SpriteDimensions.X,
+                                                            SpriteDimensions.Y);
+
+                Sides collisionSides = proposedLocation.CheckCollisions(player.SpriteRectangle);
+
+                if (collisionSides != Sides.None)
+                {
+                    Velocity = new Point(0);
+                    SpriteRectangle = new Rectangle(SpriteRectangle.X + Velocity.X, SpriteRectangle.Y + Velocity.Y, SpriteDimensions.X, SpriteDimensions.Y);
+                }
+                else
+                {
+                    Velocity = tempVelocity;
+                    SpriteRectangle = new Rectangle(SpriteRectangle.X + Velocity.X, SpriteRectangle.Y + Velocity.Y, SpriteDimensions.X, SpriteDimensions.Y);
+                }
+
+                base.Update();
+            }
         }
 
         private bool NearlyOne(float f1)
