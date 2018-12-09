@@ -4,23 +4,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace HaroutTatarianGameProject
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
-        public static AudioManager audioManager;
-        public static FontsManager fontsManager;
+        #region public static fields
+        public static AudioManager AudioManager { get; private set; }
+        public static FontsManager FontsManager { get; private set; }
         public static float DeltaTime { get; set; }
-        GraphicsDeviceManager graphics;
+        #endregion
 
-        // Declare all the scenes here
+        #region private variables
+        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        // Scenes
         private StartScene startScene;
         private ActionScene actionScene;
+        private LeaderboardScene leaderboardScene;
         private CreditScene creditScene;
         private HelpScene helpScene;
-        private LeaderboardScene leaderboardScene;
-        private SpriteBatch spriteBatch;
+        #endregion
 
         public Game1()
         {
@@ -36,20 +37,22 @@ namespace HaroutTatarianGameProject
         /// </summary>
         protected override void Initialize()
         {
-            // Full screen mode
+            // Initilize spriteBatch
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Initilize managers
+            AudioManager = new AudioManager(this);
+            FontsManager = new FontsManager(this);
+
+            // Enable full screen
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            audioManager = new AudioManager(this);
-            fontsManager = new FontsManager(this);
+            // Prepare start scene
+            AudioManager.Play(Audio.StartScene);
             startScene = new StartScene(this, spriteBatch);
-
-            // Start the music
-            audioManager.Play(Audio.StartScene);
 
             base.Initialize();
         }
@@ -61,50 +64,55 @@ namespace HaroutTatarianGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Get milliseconds passed from the previous frame untill the current one
+            // Used to provide same user expierance regardless of frame rate
             DeltaTime = gameTime.ElapsedGameTime.Milliseconds;
 
             if (actionScene != null) { actionScene.Update(); }
             if (startScene != null) { startScene.Update(); }
 
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            // Selected menu
             int selectedIndex = 0;
 
-            KeyboardState ks = Keyboard.GetState();
-
+            // Manage navigation logic and audio
             if (startScene != null)
             {
                 selectedIndex = startScene.Menu.SelectedIndex;
-                if (selectedIndex == 0 && ks.IsKeyDown(Keys.Enter))
+                if (selectedIndex == 0 && keyboardState.IsKeyDown(Keys.Enter))
                 {
                     startScene = null;
                     actionScene = new ActionScene(this, spriteBatch);
                 }
-                else if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
+                else if (selectedIndex == 1 && keyboardState.IsKeyDown(Keys.Enter))
                 {
                     startScene = null;
                     leaderboardScene = new LeaderboardScene(this, spriteBatch);
-                    audioManager.Play(Audio.LeaderboardScene);
+                    AudioManager.Play(Audio.LeaderboardScene);
                 }
-                else if (selectedIndex == 2 && ks.IsKeyDown(Keys.Enter))
+                else if (selectedIndex == 2 && keyboardState.IsKeyDown(Keys.Enter))
                 {
                     startScene = null;
                     creditScene = new CreditScene(this, spriteBatch);
-                    audioManager.Play(Audio.CreditScene);
+                    AudioManager.Play(Audio.CreditScene);
                 }
-                else if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
+                else if (selectedIndex == 3 && keyboardState.IsKeyDown(Keys.Enter))
                 {
                     startScene = null;
                     helpScene = new HelpScene(this, spriteBatch);
                 }
-                else if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
+                else if (selectedIndex == 4 && keyboardState.IsKeyDown(Keys.Enter))
                 {
                     Exit();
                 }
             }
             else if (actionScene != null || leaderboardScene != null || creditScene != null || helpScene != null)
             {
-                if (ks.IsKeyDown(Keys.Escape))
+                // Escape goes back to main menu
+                if (keyboardState.IsKeyDown(Keys.Escape))
                 {
-                    audioManager.Play(Audio.StartScene);
+                    AudioManager.Play(Audio.StartScene);
 
                     actionScene = null;
                     leaderboardScene = null;

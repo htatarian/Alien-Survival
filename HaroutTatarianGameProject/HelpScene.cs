@@ -13,12 +13,11 @@ namespace HaroutTatarianGameProject
         private readonly SpriteFont spriteFont;
         private readonly SpriteFont titleFont;
         private readonly Background background;
-        private readonly int textX;
         private readonly Game game;
         private readonly List<string> lines;
         private readonly Rectangle frame;
         private readonly Rectangle border;
-
+        private readonly int textX;
 
         public HelpScene(Game game, SpriteBatch spriteBatch)
         {
@@ -29,8 +28,8 @@ namespace HaroutTatarianGameProject
             lines = new List<string>();
 
             // Set fonts
-            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
-            titleFont = Game1.fontsManager.GetFont(Font.CourierNew120);
+            spriteFont = Game1.FontsManager.GetFont(Font.CourierNew40);
+            titleFont = Game1.FontsManager.GetFont(Font.CourierNew120);
 
             textX = (int)spriteFont.MeasureString("XXXXXXXXXXXXXXXXXXXX").X;
 

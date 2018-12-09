@@ -9,6 +9,8 @@ namespace HaroutTatarianGameProject
 {
     public class StarSprite
     {
+        public int CollectedStarsCount { get; set; }
+
         #region animation fields
         private const int shineStartFrame = 0;
         private const int shineEndFrame = 5;
@@ -22,19 +24,22 @@ namespace HaroutTatarianGameProject
         private int shineCurrentFrame = shineStartFrame;
         #endregion
 
-        private readonly List<Texture2D> spriteTextures;
+        #region private fields
+        private readonly Game game;
         private readonly SpriteBatch spriteBatch;
-        private readonly SpriteFont spriteFont;
+        private readonly List<Texture2D> spriteTextures;
+        private readonly SpriteFont spriteFont = Game1.FontsManager.GetFont(Font.CourierNew40);
         private readonly Player player;
         private Rectangle spriteRectangle;
-        private readonly Game game;
+        #endregion
 
-        public int CollectedStarsCount { get; set; }
 
         public StarSprite(Game game, SpriteBatch spriteBatch, Player player)
         {
-            this.spriteBatch = spriteBatch;
             this.game = game;
+            this.spriteBatch = spriteBatch;
+            this.player = player;
+
             spriteTextures = new List<Texture2D>
             {
                 game.Content.Load<Texture2D>("star coin 1"),
@@ -46,19 +51,16 @@ namespace HaroutTatarianGameProject
             };
 
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
-
-            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
-
-            this.player = player;
-
             spriteRectangle = GetRandomSpriteRectangle(textureReducationScale);
         }
 
         public void Draw()
         {
+            // Draw score at the top right corner
             spriteBatch.DrawString(spriteFont, "SCORE: " + CollectedStarsCount.ToString(),
                 new Vector2(game.GraphicsDevice.DisplayMode.Width - spriteFont.MeasureString("SCORE: " + CollectedStarsCount.ToString()).X -10 , 10),
                 Color.Chartreuse);
+            // Draw the star sprite
             spriteBatch.Draw(spriteTextures[shineCurrentFrame], spriteRectangle, Color.Tan);
         }
 
@@ -66,14 +68,18 @@ namespace HaroutTatarianGameProject
         {
             AnimateShine();
 
+            // If star collides with player then change position randomly
             if (spriteRectangle.CheckCollisions(player.SpriteRectangle) != Sides.None)
             {
                 spriteRectangle = GetRandomSpriteRectangle(textureReducationScale);
                 CollectedStarsCount++;
-                Game1.audioManager.Play(Audio.StarCollected);
+                Game1.AudioManager.Play(Audio.StarCollected);
             }
         }
 
+        /// <summary>
+        /// Animates shine for the star
+        /// </summary>
         private void AnimateShine()
         {
             if (shineAnimationDelayCount == shineAnimationMaxDelay)
@@ -99,6 +105,11 @@ namespace HaroutTatarianGameProject
             }
         }
         
+        /// <summary>
+        /// Returns a rectangle on the screen
+        /// </summary>
+        /// <param name="scale"> scale to be divided by </param>
+        /// <returns></returns>
         private Rectangle GetRandomSpriteRectangle(int scale)
         {
             Random randomAxis = new Random();

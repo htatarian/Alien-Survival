@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
-using C3.XNA;
 
 namespace HaroutTatarianGameProject
 {
@@ -26,13 +25,13 @@ namespace HaroutTatarianGameProject
         {
             text = "ENTER YOUR INITIALS";
             textWidth = (int) subTitleFont.MeasureString(text).X;
-            textX = x + Math.Abs(textWidth-width)/2;
-            textY = y + 20;
+            textX = rectangle.X + Math.Abs(textWidth-rectangle.Width)/2;
+            textY = rectangle.Y + 20;
 
             Input = "";
             inputWidth = (int)subTitleFont.MeasureString(Input).X;
-            inputX = x + Math.Abs(inputWidth - width) / 2;
-            inputY = y + Math.Abs(subTitleFont.LineSpacing - height) / 2;
+            inputX = rectangle.X  + Math.Abs(inputWidth - rectangle.Width) / 2;
+            inputY = rectangle.Y + Math.Abs(subTitleFont.LineSpacing - rectangle.Height) / 2;
         }
 
         public override void Draw()
@@ -65,8 +64,8 @@ namespace HaroutTatarianGameProject
             }
 
             inputWidth = (int)subTitleFont.MeasureString(Input).X;
-            inputX = x + Math.Abs(inputWidth - width) / 2;
-            inputY = y + Math.Abs(subTitleFont.LineSpacing - height) / 2;
+            inputX = rectangle.X + Math.Abs(inputWidth - rectangle.Width) / 2;
+            inputY = rectangle.Y + Math.Abs(subTitleFont.LineSpacing - rectangle.Height) / 2;
 
             previousKeyboardState = keyboardState;
         }

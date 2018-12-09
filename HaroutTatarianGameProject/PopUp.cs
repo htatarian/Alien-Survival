@@ -6,44 +6,32 @@ namespace HaroutTatarianGameProject
 {
     public class PopUp
     {
+        #region protected readonly fields
         protected readonly Game game;
-        protected readonly SpriteFont subTitleFont;
-        protected readonly SpriteFont inputFont;
         protected readonly SpriteBatch spriteBatch;
-
-        protected readonly int width;
-        protected readonly int height;
-        protected readonly int x;
-        protected readonly int y;
-
-        private readonly int borderWidth;
-        private readonly int borderHeight;
-        private readonly int borderX;
-        private readonly int borderY;
+        protected readonly SpriteFont subTitleFont = Game1.FontsManager.GetFont(Font.CourierNew40);
+        protected readonly SpriteFont inputFont = Game1.FontsManager.GetFont(Font.CourierNew60);
+        protected readonly Rectangle rectangle;
+        #endregion
 
         public PopUp(Game game, SpriteBatch spriteBatch)
         {
             this.game = game;
             this.spriteBatch = spriteBatch;
 
-            subTitleFont = Game1.fontsManager.GetFont(Font.CourierNew40);
-            inputFont = Game1.fontsManager.GetFont(Font.CourierNew60);
-
-            width = game.GraphicsDevice.DisplayMode.Width / 2;
-            height = game.GraphicsDevice.DisplayMode.Height / 4;
-            x = (game.GraphicsDevice.DisplayMode.Width - width) / 2;
-            y = (game.GraphicsDevice.DisplayMode.Height - height) / 2;
-
-            borderWidth = width;
-            borderHeight = height;
-            borderX = (game.GraphicsDevice.DisplayMode.Width - borderWidth) / 2;
-            borderY = (game.GraphicsDevice.DisplayMode.Height - borderHeight) / 2;
+            // Rectangle to pop up
+            int width = game.GraphicsDevice.DisplayMode.Width / 2;
+            int height = game.GraphicsDevice.DisplayMode.Height / 4;
+            int x = (game.GraphicsDevice.DisplayMode.Width - width) / 2;
+            int y = (game.GraphicsDevice.DisplayMode.Height - height) / 2;
+            rectangle = new Rectangle(x, y, width, height);
         }
 
         public virtual void Draw()
         {
-            spriteBatch.FillRectangle(new Rectangle(x, y, width, height), Color.Black, 0.5);
-            spriteBatch.DrawRectangle(new Rectangle(borderX, borderY, borderWidth, borderHeight), Color.Black,3f);
+            // Display rectangle with a border
+            spriteBatch.FillRectangle(rectangle, Color.Black, 0.5);
+            spriteBatch.DrawRectangle(rectangle, Color.Black,3f);
         }
     }
 }

@@ -8,30 +8,27 @@ namespace HaroutTatarianGameProject
 {
     public class MenuComponent
     {
-        private const string title = "Alien Survival";
-
         public int SelectedIndex { get; set; }
+
+        #region private fields
+        private const string title = "Alien Survival";
+        private readonly Game game;
+        private readonly SpriteBatch spriteBatch;
+        // Set font colors
         private readonly Color regularColor = Color.LightGreen;
         private readonly Color hilightColor = Color.GreenYellow;
-        private readonly SpriteBatch spriteBatch;
-        private readonly SpriteFont regularFont;
-        private readonly SpriteFont hilightFont;
-        private readonly SpriteFont titleFont;
-        private readonly List<string> menuItems;
-        private readonly Game game;
+        // Set fonts
+        private readonly SpriteFont regularFont = Game1.FontsManager.GetFont(Font.CourierNew40);
+        private readonly SpriteFont hilightFont = Game1.FontsManager.GetFont(Font.CourierNew60);
+        private readonly SpriteFont titleFont = Game1.FontsManager.GetFont(Font.CourierNew120);
+        private readonly List<string> menuItems = new List<string> { "Start Game", "Leaderboard", "Credits", "Help", "Quit" };
         private KeyboardState previousKeyboardState;
+        #endregion
 
         public MenuComponent(Game game, SpriteBatch spriteBatch)
         {
-            // Load items
-            regularFont = Game1.fontsManager.GetFont(Font.CourierNew40);
-            hilightFont = Game1.fontsManager.GetFont(Font.CourierNew60);
-            titleFont = Game1.fontsManager.GetFont(Font.CourierNew120);
-
-            // Initilize class fields
             this.game = game;
             this.spriteBatch = spriteBatch;
-            menuItems = new List<string> {"Start Game", "Leaderboard", "Credit", "Help", "Quit" };
         }
 
         public void Update()
@@ -40,7 +37,7 @@ namespace HaroutTatarianGameProject
 
             if (keyboardState.IsKeyDown(Keys.Down) && previousKeyboardState.IsKeyUp(Keys.Down) || (keyboardState.IsKeyDown(Keys.S) && previousKeyboardState.IsKeyUp(Keys.S)))
             {
-                Game1.audioManager.Play(Audio.SelectionChange);
+                Game1.AudioManager.Play(Audio.SelectionChange);
                 SelectedIndex++;
                 if (SelectedIndex == menuItems.Count)
                 {
@@ -49,7 +46,7 @@ namespace HaroutTatarianGameProject
             }
             if (keyboardState.IsKeyDown(Keys.Up) && previousKeyboardState.IsKeyUp(Keys.Up) || (keyboardState.IsKeyDown(Keys.W) && previousKeyboardState.IsKeyUp(Keys.W)))
             {
-                Game1.audioManager.Play(Audio.SelectionChange);
+                Game1.AudioManager.Play(Audio.SelectionChange);
                 SelectedIndex--;
                 if (SelectedIndex == -1)
                 {

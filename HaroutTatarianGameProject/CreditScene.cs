@@ -11,24 +11,22 @@ namespace HaroutTatarianGameProject
 {
     public class CreditScene
     {
+        #region private fields
         private const string theEndStr = "The End";
         private readonly Game game;
         private readonly SpriteBatch spriteBatch;
-        private readonly SpriteFont spriteFont;
-        private readonly SpriteFont theEndFont;
-        private readonly List<string> lines;
-        private float scrollUp;
+        private readonly SpriteFont spriteFont = Game1.FontsManager.GetFont(Font.CourierNew40);
+        private readonly SpriteFont theEndFont = Game1.FontsManager.GetFont(Font.CourierNew120);
+        private readonly List<string> lines = new List<string>();
+        private float scrollUp = 0f;
+        #endregion
 
         public CreditScene(Game game, SpriteBatch spriteBatch)
         {
             this.game = game;
             this.spriteBatch = spriteBatch;
-            lines = new List<string>();
-            scrollUp = 0;
 
-            // Set fonts
-            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
-            theEndFont = Game1.fontsManager.GetFont(Font.CourierNew120);
+            #region lines to be displayed
             lines.Add("");
             lines.Add("");
             lines.Add("");
@@ -44,41 +42,55 @@ namespace HaroutTatarianGameProject
             lines.Add("Instructor");
             lines.Add("");
             lines.Add("");
-            lines.Add("PICTURES");
+            lines.Add("LIBRARIES");
             lines.Add("");
-            lines.Add("Redwallpapers");
-            lines.Add("Craftpix");
-            lines.Add("Matkojedyna");
-            lines.Add("Derpibooru");
-            lines.Add("DontMind8");
+            lines.Add("Pritives2D by John McDonald");
+            lines.Add("Collisions by Steve Hendrikse");
             lines.Add("");
-            lines.Add("MUSIC");
             lines.Add("");
-            lines.Add("Oymaldonado");
-            lines.Add("Jimhancock");
-            lines.Add("Tuudurt");
-            lines.Add("Cabledmess");
-            lines.Add("Michel88");
-            lines.Add("Shnur_");
-            lines.Add("Mikobuntu");
-            lines.Add("Haydensayshi123");
-            lines.Add("ShadyDave");
+            lines.Add("PICTURES & SKINS");
+            lines.Add("");
+            lines.Add("Start Scene by Redwallpapers");
+            lines.Add("Alien Skin by Craftpix");
+            lines.Add("Leaderboard by Matkojedyna");
+            lines.Add("Action Scene by Derpibooru");
+            lines.Add("Star Coins by DontMind8");
+            lines.Add("");
+            lines.Add("MUSIC & SOUND EFFECTS");
+            lines.Add("");
+            lines.Add("Menu Theme by Haydensayshi123");
+            lines.Add("Main Theme by Mikobuntu");
+            lines.Add("Leaderboard Theme by ShadyDave");
+            lines.Add("Credits Theme by Oymaldonado");
+            lines.Add("Win SFX by Jimhancock");
+            lines.Add("Game SFX End by Tuudurt");
+            lines.Add("Lose SFX by Cabledmess");
+            lines.Add("Hurt SFX by Michel88");
+            lines.Add("Coin SFX By Shnur_");
+            #endregion
         }
 
         public void Draw()
         {
+            // Display black background
             spriteBatch.FillRectangle(new Rectangle(0, 0, game.GraphicsDevice.DisplayMode.Width, game.GraphicsDevice.DisplayMode.Height), Color.Black);
-            float yAxis = -1;
+
+            // Display all the lines
+            float currentLineYAxis = -1;
             for (int i = 0; i < lines.Count; i++)
             {
-                yAxis = game.GraphicsDevice.DisplayMode.Height / 4 + spriteFont.LineSpacing * i + scrollUp;
+                currentLineYAxis = game.GraphicsDevice.DisplayMode.Height - spriteFont.LineSpacing + spriteFont.LineSpacing * i + scrollUp;
+                // Fade as getting close to fade region
+                float fadeRegion = (currentLineYAxis - (game.GraphicsDevice.DisplayMode.Width / 30) * 1.3f);
+                float fadeSpeed = 0.0025f;
                 spriteBatch.DrawString(spriteFont, lines[i],
                     new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(lines[i]).X / 2,
-                    yAxis),
-                    Color.White * ((yAxis - (game.GraphicsDevice.DisplayMode.Width / 30) * 1.3f) * 0.0025f));
+                    currentLineYAxis),
+                    Color.White * (fadeRegion * fadeSpeed));
             }
 
-            if (yAxis < 0f)
+            // Display the end message after all lines are done
+            if (currentLineYAxis < 0f)
             {
                 spriteBatch.DrawString(theEndFont, theEndStr,
                     new Vector2((game.GraphicsDevice.DisplayMode.Width - theEndFont.MeasureString(theEndStr).X) / 2f,
@@ -86,7 +98,7 @@ namespace HaroutTatarianGameProject
                     Color.White);
             }
             
-            scrollUp = (scrollUp - (0.07f * Game1.DeltaTime));
+            scrollUp = scrollUp - (0.064f * Game1.DeltaTime);
         }
     }
 }

@@ -19,8 +19,12 @@ namespace HaroutTatarianGameProject
         None
     }
 
+    /// <summary>
+    /// Manages all audio for the game
+    /// </summary>
     public class AudioManager
     {
+        #region private readonly sound effect instances
         private readonly SoundEffectInstance mainMenuThemeInstance;
         private readonly SoundEffectInstance mainGameThemeInstance;
         private readonly SoundEffectInstance leaderboardThemeInstance;
@@ -30,9 +34,11 @@ namespace HaroutTatarianGameProject
         private readonly SoundEffectInstance selectionChangeSfxInstance;
         private readonly SoundEffectInstance starCollectedSfxInstance;
         private readonly SoundEffectInstance creditsSceneThemeInstance;
+        #endregion
 
         public AudioManager(Game game)
         {
+            #region initialize and load sound effects
             SoundEffect mainMenuTheme = game.Content.Load<SoundEffect>("mainMenuTheme");
             mainMenuThemeInstance = mainMenuTheme.CreateInstance();
             mainMenuThemeInstance.IsLooped = true;
@@ -62,8 +68,13 @@ namespace HaroutTatarianGameProject
 
             SoundEffect starCollectedSfx = game.Content.Load<SoundEffect>("starCollectedSfx");
             starCollectedSfxInstance = starCollectedSfx.CreateInstance();
+            #endregion
         }
 
+        /// <summary>
+        /// Plays the proper audio. Also, stops any other playing ones.
+        /// </summary>
+        /// <param name="audio">Audio to be played</param>
         public void Play(Audio audio)
         {
             switch (audio)

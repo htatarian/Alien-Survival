@@ -6,6 +6,7 @@ namespace HaroutTatarianGameProject
 {
     public enum AlienSize
     {
+        // Value must not be zero. DivideByZero exception
         Large = 2,
         Medium = 3,
         Small = 4
@@ -13,7 +14,19 @@ namespace HaroutTatarianGameProject
 
     public abstract class AlienSprite
     {
-        #region animation fields
+        #region public properties
+        // Used to move and draw texture. Also, to determine collosion
+        public Rectangle SpriteRectangle { get; set; }
+        public Point SpriteDimensions { get; set; }
+        #endregion
+
+        #region private fields
+        private readonly List<Texture2D> spriteTextures;
+        private readonly SpriteBatch spriteBatch;  
+        private readonly Color color;
+        #endregion
+
+        #region private animation fields
         private const int idleFrameStart = 0;
         private const int idleFrameBlink = 1;
         private const int idleFrameEnd = 2;
@@ -27,21 +40,15 @@ namespace HaroutTatarianGameProject
         private SpriteEffects spriteDirection = SpriteEffects.None;
         #endregion
 
-        // Used to move and draw texture. Also, to determine collosion
-        public Rectangle SpriteRectangle { get; set; }
-        public Point SpriteDimensions { get; set; }  
-        private readonly List<Texture2D> spriteTextures;
-        private readonly SpriteBatch spriteBatch;  
-        private readonly Color color;
-
+        #region protected abstract properties
         protected abstract bool IsIdle { get; set; }
         protected abstract bool WasRunning { get; set; }
         protected abstract Point Velocity { get; set; }
+        #endregion
 
         public AlienSprite(Game game, SpriteBatch spriteBatch, Color color, AlienSize alienSize)
         {
-            this.spriteBatch = spriteBatch;
-
+            #region load textures
             spriteTextures = new List<Texture2D>
             {
                 // Load idle position resources
@@ -62,16 +69,19 @@ namespace HaroutTatarianGameProject
                 game.Content.Load<Texture2D>("green__0016_run_5"),
                 game.Content.Load<Texture2D>("green__0017_run_6")
             };
+            #endregion
 
-            spriteBatch = new SpriteBatch(game.GraphicsDevice);
+            this.spriteBatch = spriteBatch;
             this.color = color;
 
+            // Set public properties
             SpriteDimensions = new Point(spriteTextures[0].Width /(int) alienSize, spriteTextures[0].Height /(int) alienSize);
             SpriteRectangle = new Rectangle(0, 0, SpriteDimensions.X, SpriteDimensions.Y);
         }
 
         public virtual void Draw()
         {
+            // Draw the sprite
             spriteBatch.Draw(texture: spriteTextures[currentFrame],
                 destinationRectangle: SpriteRectangle, 
                 sourceRectangle: null, 

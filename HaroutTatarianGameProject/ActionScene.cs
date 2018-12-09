@@ -1,40 +1,38 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PROG2370CollisionLibrary;
 using System.Linq;
 
 namespace HaroutTatarianGameProject
 {
     public class ActionScene
     {
-        private string gameEndMessageLineOne = "";
-        private string gameEndMessageLineTwo = "";
-
+        #region private fields
+        private readonly Game game;
+        private readonly SpriteBatch spriteBatch;
         private readonly SpriteFont gameEndFont;
         private readonly SpriteFont spriteFont;
-
-        public static LevelStopWatch levelStopWatch;
-        public static StarSprite star;
-        public static HealthBar healthBar;
-
-        private readonly Game game;
-
-        private InitialInputWindow InitialInputWindow;
-        private SpriteBatch spriteBatch;
-        public Enemy enemy;
-
-        bool isInitialEntered = false;
-        bool isWinSoundPlayed = false;
-        bool isThemeSongStopped = false;
-
-        public Player player;
-        Background background;
+        private readonly Background background;
+        private readonly Enemy enemy;
+        private readonly Player player;
+        private readonly HealthBar healthBar;
+        private readonly InitialInputWindow InitialInputWindow;
+        private readonly StarSprite star;
+        // End game messages
+        private LevelStopWatch levelStopWatch;
+        private string endGameMessageTitle = "";
+        private string endGameMessageSubtitle = "";
+        private string hint = "";
+        // Status check fields
+        private bool isGodMod = false;
+        private bool isInitialEntered = false;
+        private bool isWinSoundPlayed = false;
+        private bool isThemeSongStopped = false;
+        #endregion
 
         public ActionScene (Game game, SpriteBatch spriteBatch)
         {
-            // Stop music
-            Game1.audioManager.Play(Audio.None);
-
             this.game = game;
             this.spriteBatch = spriteBatch;
 
@@ -43,17 +41,18 @@ namespace HaroutTatarianGameProject
             background = new Background(game, spriteBatch, backgroundTexture);
 
             // Set fonts
-            gameEndFont = Game1.fontsManager.GetFont(Font.CourierNew160);
-            spriteFont = Game1.fontsManager.GetFont(Font.CourierNew40);
+            gameEndFont = Game1.FontsManager.GetFont(Font.CourierNew160);
+            spriteFont = Game1.FontsManager.GetFont(Font.CourierNew40);
 
             // Initilize fields
             player = new Player(game, spriteBatch);
             star = new StarSprite(game, spriteBatch, player);
-            enemy = new Enemy(game, spriteBatch, Color.DarkRed, player, new Vector2(0, 0));
+            enemy = new Enemy(game, spriteBatch, Color.DarkRed, player);
             InitialInputWindow = new InitialInputWindow(game, spriteBatch);
             healthBar = new HealthBar(game, spriteBatch);
 
-            player.enemy = enemy;
+            // Stop the music until initials are entered
+            Game1.AudioManager.Play(Audio.None);
         }
 
         public void Update()
@@ -64,11 +63,13 @@ namespace HaroutTatarianGameProject
             if (!isInitialEntered)
             {
                 InitialInputWindow.Update();
+
+                // Check if valid initials are entered
                 if (keys.Contains(Keys.Enter) && !isInitialEntered && InitialInputWindow.Input.Length == 3)
                 {
                     isInitialEntered = true;
                     levelStopWatch = new LevelStopWatch(game, spriteBatch);
-                    Game1.audioManager.Play(Audio.ActionScene);
+                    Game1.AudioManager.Play(Audio.ActionScene);
                 }
             }
             else
@@ -79,36 +80,64 @@ namespace HaroutTatarianGameProject
                     enemy.Update();
                     star.Update();
                     levelStopWatch.Update();
+
+                    // Change inputs after a minute passes. Also, display a hint
+                    if (levelStopWatch.LevelTime.Elapsed.Minutes >= 1)
+                    {
+                        hint = "*Feeling Dizzy*";
+                        player.MovmentKeys = new Keys[] { Keys.A, Keys.Left, Keys.D, Keys.Right, Keys.W, Keys.Up, Keys.S, Keys.Down };
+                    }
+
+                    #region player enemy collision logic
+                    // Enable god mode
+                    if (keyboardState.IsKeyDown(Keys.F12))
+                    {
+                        isGodMod = !isGodMod;
+                    }
+
+                    if (!isGodMod)
+                    {
+                        // Slightly bigger collosion box than the player's for better collosion
+                        Rectangle outerPlayerRec = new Rectangle(player.SpriteRectangle.X - 5, player.SpriteRectangle.Y - 5, player.SpriteRectangle.Width + 10, player.SpriteRectangle.Height + 10);
+                        Sides collisionSides = outerPlayerRec.CheckCollisions(enemy.SpriteRectangle);
+
+                        if (collisionSides != Sides.None)
+                        {
+                            healthBar.DescreaseHealth();
+                            Game1.AudioManager.Play(Audio.Hurt);
+                        }
+                    }
+                    #endregion
                 }
                 else
                 {
                     // Stop background music
                     if (!isThemeSongStopped)
                     {
-                        Game1.audioManager.Play(Audio.None);
+                        Game1.AudioManager.Play(Audio.None);
                         isThemeSongStopped = true;
                     }
 
                     // Check if dead
                     if(healthBar.InnerRectangle.Width <= 0)
                     {
-                        gameEndMessageLineOne = "You Lost";
-                        gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+                        endGameMessageTitle = "You Lost";
+                        endGameMessageSubtitle = "Press ESC To Go Back To Main Menu";
 
                         if (!isWinSoundPlayed)
                         {
-                            Game1.audioManager.Play(Audio.Lose);
+                            Game1.AudioManager.Play(Audio.Lose);
                             isWinSoundPlayed = true;
                         }
                     }
                     // Check if survived
                     else if(!levelStopWatch.LevelTime.IsRunning)
                     {
-                        gameEndMessageLineOne = "You Survived";
-                        gameEndMessageLineTwo = "Press ESC To Go Back To Main Menu";
+                        endGameMessageTitle = "You Survived";
+                        endGameMessageSubtitle = "Press ESC To Go Back To Main Menu";
                         if (!isWinSoundPlayed)
                         {
-                            Game1.audioManager.Play(Audio.Win);
+                            Game1.AudioManager.Play(Audio.Win);
                             isWinSoundPlayed = true;
                         }
 
@@ -123,10 +152,12 @@ namespace HaroutTatarianGameProject
         public void Draw()
         {
             background.Draw();
+
             if (!isInitialEntered)
             {
                 InitialInputWindow.Draw();
             }
+            // Simulate the game
             else
             {
                 levelStopWatch.Draw();
@@ -135,16 +166,24 @@ namespace HaroutTatarianGameProject
                 enemy.Draw();
                 player.Draw();
 
+                // Draw hint
+                spriteBatch.DrawString(spriteFont, hint,
+                    new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(hint).X / 2f, 25),
+                    Color.Cornsilk);
+                
+                // If dead or survived
                 if (healthBar.InnerRectangle.Width <= 0 || !levelStopWatch.LevelTime.IsRunning)
                 {
-                    spriteBatch.DrawString(gameEndFont, gameEndMessageLineOne,
-                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).X / 2,
-                        game.GraphicsDevice.DisplayMode.Height / 2 - gameEndFont.MeasureString(gameEndMessageLineOne).Y / 2),
+                    // Game end title
+                    spriteBatch.DrawString(gameEndFont, endGameMessageTitle,
+                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - gameEndFont.MeasureString(endGameMessageTitle).X / 2,
+                        game.GraphicsDevice.DisplayMode.Height / 2 - gameEndFont.MeasureString(endGameMessageTitle).Y / 2),
                         Color.Cornsilk);
-                    spriteBatch.DrawString(spriteFont, gameEndMessageLineTwo,
-                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).X / 2,
-                        game.GraphicsDevice.DisplayMode.Height / 2 - spriteFont.MeasureString(gameEndMessageLineTwo).Y / 2
-                        + gameEndFont.MeasureString(gameEndMessageLineOne).Y),
+                    // Game end subtitle
+                    spriteBatch.DrawString(spriteFont, endGameMessageSubtitle,
+                        new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - spriteFont.MeasureString(endGameMessageSubtitle).X / 2,
+                        game.GraphicsDevice.DisplayMode.Height / 2 - spriteFont.MeasureString(endGameMessageSubtitle).Y / 2
+                        + gameEndFont.MeasureString(endGameMessageTitle).Y),
                         Color.Cornsilk);
                 }
             }
