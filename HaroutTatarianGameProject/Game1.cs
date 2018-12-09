@@ -11,11 +11,13 @@ namespace HaroutTatarianGameProject
     {
         public static AudioManager audioManager;
         public static FontsManager fontsManager;
+        public static float DeltaTime { get; set; }
         GraphicsDeviceManager graphics;
 
-        //declare all the scenes here
+        // Declare all the scenes here
         private StartScene startScene;
         private ActionScene actionScene;
+        private CreditScene creditScene;
         private HelpScene helpScene;
         private LeaderboardScene leaderboardScene;
         private SpriteBatch spriteBatch;
@@ -42,18 +44,14 @@ namespace HaroutTatarianGameProject
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            base.Initialize();
-        }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
             audioManager = new AudioManager(this);
             fontsManager = new FontsManager(this);
             startScene = new StartScene(this, spriteBatch);
+
+            // Start the music
+            audioManager.Play(Audio.StartScene);
+
+            base.Initialize();
         }
 
         /// <summary>
@@ -63,6 +61,8 @@ namespace HaroutTatarianGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            DeltaTime = gameTime.ElapsedGameTime.Milliseconds;
+
             if (actionScene != null) { actionScene.Update(); }
             if (startScene != null) { startScene.Update(); }
 
@@ -82,6 +82,13 @@ namespace HaroutTatarianGameProject
                 {
                     startScene = null;
                     leaderboardScene = new LeaderboardScene(this, spriteBatch);
+                    audioManager.Play(Audio.LeaderboardScene);
+                }
+                else if (selectedIndex == 2 && ks.IsKeyDown(Keys.Enter))
+                {
+                    startScene = null;
+                    creditScene = new CreditScene(this, spriteBatch);
+                    audioManager.Play(Audio.CreditScene);
                 }
                 else if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
                 {
@@ -93,12 +100,15 @@ namespace HaroutTatarianGameProject
                     Exit();
                 }
             }
-            else if (actionScene != null || leaderboardScene != null || helpScene != null)
+            else if (actionScene != null || leaderboardScene != null || creditScene != null || helpScene != null)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
+                    audioManager.Play(Audio.StartScene);
+
                     actionScene = null;
                     leaderboardScene = null;
+                    creditScene = null;
                     helpScene = null;
                     startScene = new StartScene(this, spriteBatch);
                 }
@@ -117,6 +127,7 @@ namespace HaroutTatarianGameProject
             if (actionScene != null) { actionScene.Draw(); }
             if (startScene != null) { startScene.Draw(); }
             if (leaderboardScene != null) { leaderboardScene.Draw(); }
+            if (creditScene != null) { creditScene.Draw(); }
             if (helpScene != null) { helpScene.Draw(); }
             spriteBatch.End();
 

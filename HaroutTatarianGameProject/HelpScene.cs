@@ -38,8 +38,8 @@ namespace HaroutTatarianGameProject
             lines.Add("1. Survive");
             lines.Add("2. Collect the stars");
             lines.Add("");
-            lines.Add("Controls:");
-            lines.Add("W S A D To Move");
+            lines.Add("Movment:");
+            lines.Add("ARROWS Or WSDA");
             lines.Add("");
 
             int centreX = game.GraphicsDevice.DisplayMode.Width / 2;

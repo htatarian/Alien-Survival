@@ -12,8 +12,6 @@ namespace HaroutTatarianGameProject
             Texture2D backgroundTexture = game.Content.Load<Texture2D>("start_scene_background");
             background = new Background(game, spriteBatch,backgroundTexture);
             Menu = new MenuComponent(game, spriteBatch);
-
-            Game1.audioManager.Play(Audio.StartScene);
         }
         public void Update()
         {

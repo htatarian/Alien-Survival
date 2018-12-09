@@ -8,6 +8,7 @@ namespace HaroutTatarianGameProject
     { 
         StartScene,
         ActionScene,
+        LeaderboardScene,
         HelpScene,
         CreditScene,
         SelectionChange,
@@ -22,11 +23,13 @@ namespace HaroutTatarianGameProject
     {
         private readonly SoundEffectInstance mainMenuThemeInstance;
         private readonly SoundEffectInstance mainGameThemeInstance;
+        private readonly SoundEffectInstance leaderboardThemeInstance;
         private readonly SoundEffectInstance winGameInstance;
         private readonly SoundEffectInstance loseGameSfxInstance;
         private readonly SoundEffectInstance hurtSfxInstance;
         private readonly SoundEffectInstance selectionChangeSfxInstance;
         private readonly SoundEffectInstance starCollectedSfxInstance;
+        private readonly SoundEffectInstance creditsSceneThemeInstance;
 
         public AudioManager(Game game)
         {
@@ -34,9 +37,16 @@ namespace HaroutTatarianGameProject
             mainMenuThemeInstance = mainMenuTheme.CreateInstance();
             mainMenuThemeInstance.IsLooped = true;
 
+            SoundEffect leaderboardTheme = game.Content.Load<SoundEffect>("leaderboardTheme");
+            leaderboardThemeInstance = leaderboardTheme.CreateInstance();
+            leaderboardThemeInstance.IsLooped = true;
+
             SoundEffect mainGameTheme = game.Content.Load<SoundEffect>("mainGameTheme");
             mainGameThemeInstance = mainGameTheme.CreateInstance();
             mainGameThemeInstance.IsLooped = true;
+
+            SoundEffect creditsSceneTheme = game.Content.Load<SoundEffect>("creditsSceneTheme");
+            creditsSceneThemeInstance = creditsSceneTheme.CreateInstance();
 
             SoundEffect winGameSfx = game.Content.Load<SoundEffect>("winGameSfx");
             winGameInstance = winGameSfx.CreateInstance();
@@ -59,12 +69,28 @@ namespace HaroutTatarianGameProject
             switch (audio)
             {
                 case Audio.StartScene:
-                    mainMenuThemeInstance.Play();
+                    leaderboardThemeInstance.Stop();
+                    creditsSceneThemeInstance.Stop();
                     mainGameThemeInstance.Stop();
+                    mainMenuThemeInstance.Play();
+                    break;
+                case Audio.LeaderboardScene:
+                    creditsSceneThemeInstance.Stop();
+                    mainGameThemeInstance.Stop();
+                    mainMenuThemeInstance.Stop();
+                    leaderboardThemeInstance.Play();
                     break;
                 case Audio.ActionScene:
-                    mainGameThemeInstance.Play();
+                    creditsSceneThemeInstance.Stop();
+                    leaderboardThemeInstance.Stop();
                     mainMenuThemeInstance.Stop();
+                    mainGameThemeInstance.Play();
+                    break;
+                case Audio.CreditScene:
+                    leaderboardThemeInstance.Stop();
+                    mainMenuThemeInstance.Stop();
+                    mainGameThemeInstance.Stop();
+                    creditsSceneThemeInstance.Play();
                     break;
                 case Audio.Win:
                     winGameInstance.Play();
@@ -83,7 +109,9 @@ namespace HaroutTatarianGameProject
                     break;
                 default:
                     mainGameThemeInstance.Stop();
+                    leaderboardThemeInstance.Stop();
                     mainMenuThemeInstance.Stop();
+                    creditsSceneThemeInstance.Stop();
                     break;
             }
         }

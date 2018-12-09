@@ -18,7 +18,7 @@ namespace HaroutTatarianGameProject
         private string hint = "";
 
         private KeyboardState previousKeyboardState;
-        private const float Speed = 7f;
+        private const float Speed = 0.42f;
         protected override bool IsIdle { get; set; }
         protected override bool WasRunning { get; set; }
         protected override Point Velocity { get; set; }
@@ -77,28 +77,28 @@ namespace HaroutTatarianGameProject
                 {
                     if (SpriteRectangle.X < game.GraphicsDevice.DisplayMode.Width - SpriteDimensions.X)
                     {
-                        Velocity = new Point((int)(Speed), Velocity.Y);
+                        Velocity = new Point((int)(Speed * Game1.DeltaTime), Velocity.Y);
                     }
                 }
                 else if (keyboardState.IsKeyDown(keys[2]) || keyboardState.IsKeyDown(keys[3]))
                 {
                     if (SpriteRectangle.X > 0)
                     {
-                        Velocity = new Point((int)(-Speed), Velocity.Y);
+                        Velocity = new Point((int)(-Speed * Game1.DeltaTime), Velocity.Y);
                     }
                 }
                 else if (keyboardState.IsKeyDown(keys[4]) || keyboardState.IsKeyDown(keys[5]))
                 {
                     if (SpriteRectangle.Y > 0)
                     {
-                        Velocity = new Point(Velocity.X, (int)(-Speed));
+                        Velocity = new Point(Velocity.X, (int)(-Speed * Game1.DeltaTime));
                     }
                 }
                 else if (keyboardState.IsKeyDown(keys[6]) || keyboardState.IsKeyDown(keys[7]))
                 {
                     if (SpriteRectangle.Y < game.GraphicsDevice.DisplayMode.Height - SpriteDimensions.Y)
                     {
-                        Velocity = new Point(Velocity.X, (int)(Speed));
+                        Velocity = new Point(Velocity.X, (int)(Speed * Game1.DeltaTime));
                     }
                 }
             }

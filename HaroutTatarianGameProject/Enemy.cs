@@ -10,7 +10,7 @@ namespace HaroutTatarianGameProject
     {
         private KeyboardState PreviousKeyboardState { get; set; }
         private Player player;
-        private const float Speed = 4.165f;
+        private const float Speed = 0.25f;
         private bool isFrozen = false;
         
         protected override bool WasRunning { get; set; }
@@ -43,22 +43,22 @@ namespace HaroutTatarianGameProject
                     // fix enemies not going on x axis
                     if (player.SpriteRectangle.X > SpriteRectangle.X)
                     {
-                        tempVelocity = new Point((int)(Speed), tempVelocity.Y);
+                        tempVelocity = new Point((int)(Speed * Game1.DeltaTime), tempVelocity.Y);
                     }
                     else if (player.SpriteRectangle.X < SpriteRectangle.X)
                     {
-                        tempVelocity = new Point((int)(-Speed), tempVelocity.Y);
+                        tempVelocity = new Point((int)(-Speed * Game1.DeltaTime), tempVelocity.Y);
                     }
                 }
                 if (!NearlyEqual(player.SpriteRectangle.Y, SpriteRectangle.Y))
                 {
                     if (player.SpriteRectangle.Y > SpriteRectangle.Y)
                     {
-                        tempVelocity = new Point(tempVelocity.X, (int)(Speed));
+                        tempVelocity = new Point(tempVelocity.X, (int)(Speed * Game1.DeltaTime));
                     }
                     else if (player.SpriteRectangle.Y < SpriteRectangle.Y)
                     {
-                        tempVelocity = new Point(tempVelocity.X, (int)(-Speed));
+                        tempVelocity = new Point(tempVelocity.X, (int)(-Speed * Game1.DeltaTime));
                     }
                 }
 

@@ -75,6 +75,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Collisions.cs" />
+    <Compile Include="CreditScene.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="FontsManager.cs" />
     <Compile Include="Game1.cs" />

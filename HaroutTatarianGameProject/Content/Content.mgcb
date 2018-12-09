@@ -53,6 +53,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Courier New 60.spritefont
 
+#begin creditsSceneTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:creditsSceneTheme.wav
+
 #begin green__0000_idle_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -214,6 +220,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:leaderboard_scene_background.png
+
+#begin leaderboardTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:leaderboardTheme.wav
 
 #begin loseGameSfx.wav
 /importer:WavImporter
