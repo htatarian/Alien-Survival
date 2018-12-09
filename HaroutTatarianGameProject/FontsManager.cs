@@ -16,7 +16,6 @@ namespace HaroutTatarianGameProject
         CourierNew120,
         CourierNew160
     }
-
     public class FontsManager
     {
         #region private readonly sprite fonts
@@ -29,10 +28,10 @@ namespace HaroutTatarianGameProject
         public FontsManager(Game game)
         {
             // Load fonts
-            CourierNew40 = game.Content.Load<SpriteFont>("Courier New 40");
-            CourierNew60 = game.Content.Load<SpriteFont>("Courier New 60");
-            CourierNew120 = game.Content.Load<SpriteFont>("Courier New 120");
-            CourierNew160 = game.Content.Load<SpriteFont>("Courier New 160");
+            CourierNew40 = game.Content.Load<SpriteFont>("Courier_New_40");
+            CourierNew60 = game.Content.Load<SpriteFont>("Courier_New_60");
+            CourierNew120 = game.Content.Load<SpriteFont>("Courier_New_120");
+            CourierNew160 = game.Content.Load<SpriteFont>("Courier_New_160");
         }
 
         /// <summary>

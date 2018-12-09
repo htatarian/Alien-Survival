@@ -42,12 +42,12 @@ namespace HaroutTatarianGameProject
 
             spriteTextures = new List<Texture2D>
             {
-                game.Content.Load<Texture2D>("star coin 1"),
-                game.Content.Load<Texture2D>("star coin 2"),
-                game.Content.Load<Texture2D>("star coin 3"),
-                game.Content.Load<Texture2D>("star coin 4"),
-                game.Content.Load<Texture2D>("star coin 5"),
-                game.Content.Load<Texture2D>("star coin 6")
+                game.Content.Load<Texture2D>("star_coin_1"),
+                game.Content.Load<Texture2D>("star_coin_2"),
+                game.Content.Load<Texture2D>("star_coin_3"),
+                game.Content.Load<Texture2D>("star_coin_4"),
+                game.Content.Load<Texture2D>("star_coin_5"),
+                game.Content.Load<Texture2D>("star_coin_6")
             };
 
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
