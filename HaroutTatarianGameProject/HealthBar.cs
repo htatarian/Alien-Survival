@@ -27,7 +27,6 @@ namespace HaroutTatarianGameProject
             InnerRectangle = new Rectangle(outerRectangleX,outerRectangleY,outerRectangleWidth,outerRectangleHeight);
             outerRectangle = InnerRectangle;
         }
-
         public void Draw()
         {
             KeyboardState keyboardState = Keyboard.GetState();
@@ -51,7 +50,7 @@ namespace HaroutTatarianGameProject
             bool hasHealth = false;
 
             // Decrease inner healthbar rectangle
-            InnerRectangle = new Rectangle(InnerRectangle.Location, new Point(InnerRectangle.Width - InnerRectangle.Width / 100, InnerRectangle.Height));
+            InnerRectangle = new Rectangle(InnerRectangle.Location, new Point(InnerRectangle.Width - outerRectangle.Width / 100, InnerRectangle.Height));
             if (InnerRectangle.Width > 0)
             {
                 hasHealth = true;
